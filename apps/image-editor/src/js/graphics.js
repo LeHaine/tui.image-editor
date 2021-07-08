@@ -1535,6 +1535,10 @@ class Graphics {
 
     return resize.resize(dimensions);
   }
+
+  toJSON() {
+    return this._canvas.toJSON();
+  }
 }
 
 CustomEvents.mixin(Graphics);

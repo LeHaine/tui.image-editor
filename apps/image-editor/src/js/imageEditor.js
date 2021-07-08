@@ -1766,6 +1766,10 @@ class ImageEditor {
   resize(dimensions) {
     return this.execute(commands.RESIZE_IMAGE, dimensions);
   }
+
+  toJSON() {
+    return this._graphics.toJSON();
+  }
 }
 
 action.mixin(ImageEditor);
