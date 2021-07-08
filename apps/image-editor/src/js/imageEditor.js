@@ -1770,6 +1770,10 @@ class ImageEditor {
   toJSON() {
     return this._graphics.toJSON();
   }
+
+  loadFromJSON(json) {
+    this._graphics.loadFromJSON(json);
+  }
 }
 
 action.mixin(ImageEditor);

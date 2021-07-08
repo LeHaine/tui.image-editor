@@ -1539,6 +1539,10 @@ class Graphics {
   toJSON() {
     return this._canvas.toJSON();
   }
+
+  loadFromJSON(json) {
+    this._canvas.loadFromJSON(json, this.renderAll);
+  }
 }
 
 CustomEvents.mixin(Graphics);
