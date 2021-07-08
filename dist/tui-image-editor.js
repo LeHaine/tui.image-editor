@@ -14974,7 +14974,7 @@ var Graphics = function () {
   }, {
     key: 'loadFromJSON',
     value: function loadFromJSON(json) {
-      this._canvas.loadFromJSON(json, this.renderAll);
+      this._canvas.loadFromJSON(json, this._canvas.renderAll.bind(this._canvas));
     }
   }]);
 
