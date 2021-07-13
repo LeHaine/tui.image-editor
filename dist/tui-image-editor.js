@@ -12870,7 +12870,7 @@ var Graphics = function () {
           y = _ref2.y;
 
       var canvas = this.getCanvas();
-      canvas.zoomToPint({ x: x, y: y }, zoomLevel);
+      canvas.zoomToPoint({ x: x, y: y }, zoomLevel);
     }
   }, {
     key: 'getCanvasZoom',
