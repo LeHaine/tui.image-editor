@@ -12385,7 +12385,8 @@ var Graphics = function () {
   function Graphics(element) {
     var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
         cssMaxWidth = _ref.cssMaxWidth,
-        cssMaxHeight = _ref.cssMaxHeight;
+        cssMaxHeight = _ref.cssMaxHeight,
+        preserveObjectStacking = _ref.preserveObjectStacking;
 
     _classCallCheck(this, Graphics);
 
@@ -12484,7 +12485,7 @@ var Graphics = function () {
     };
 
     this._setObjectCachingToFalse();
-    this._setCanvasElement(element);
+    this._setCanvasElement(element, preserveObjectStacking);
     this._createDrawingModeInstances();
     this._createComponents();
     this._attachCanvasEvents();
@@ -13512,12 +13513,13 @@ var Graphics = function () {
     /**
      * Set canvas element to fabric.Canvas
      * @param {Element|string} element - Wrapper or canvas element or selector
+     * @param {Boolean} preserveObjectStacking - preserve object stacking or not
      * @private
      */
 
   }, {
     key: '_setCanvasElement',
-    value: function _setCanvasElement(element) {
+    value: function _setCanvasElement(element, preserveObjectStacking) {
       var selectedElement = void 0;
       var canvasElement = void 0;
 
@@ -13534,7 +13536,8 @@ var Graphics = function () {
 
       this._canvas = new _fabric2.default.Canvas(canvasElement, {
         containerClass: 'tui-image-editor-canvas-container',
-        enableRetinaScaling: false
+        enableRetinaScaling: false,
+        preserveObjectStacking: preserveObjectStacking
       });
     }
 
@@ -15512,7 +15515,8 @@ var ImageEditor = function () {
      */
     this._graphics = new _graphics2.default(wrapper, {
       cssMaxWidth: options.cssMaxWidth,
-      cssMaxHeight: options.cssMaxHeight
+      cssMaxHeight: options.cssMaxHeight,
+      preserveObjectStacking: options.preserveObjectStacking ? options.preserveObjectStacking : false
     });
 
     /**
