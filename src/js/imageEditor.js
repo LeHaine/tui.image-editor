@@ -4,7 +4,6 @@
  */
 import snippet from 'tui-code-snippet';
 import Invoker from '@/invoker';
-import action from '@/action';
 import commandFactory from '@/factory/command';
 import Graphics from '@/graphics';
 import { makeSelectionUndoData, makeSelectionUndoDatum } from '@/helper/selectionModifyHelper';
@@ -21,6 +20,9 @@ const { isUndefined, forEach, CustomEvents } = snippet;
 
 const {
   MOUSE_DOWN,
+  MOUSE_UP,
+  MOUSE_MOVE,
+  MOUSE_WHEEL,
   OBJECT_MOVED,
   OBJECT_SCALED,
   OBJECT_ACTIVATED,
@@ -199,6 +201,9 @@ class ImageEditor {
     this._handlers = {
       keydown: this._onKeyDown.bind(this),
       mousedown: this._onMouseDown.bind(this),
+      mouseup: this._onMouseUp.bind(this),
+      mousemove: this._onMouseMove.bind(this),
+      mousewheel: this._onMouseWheel.bind(this),
       objectActivated: this._onObjectActivated.bind(this),
       objectMoved: this._onObjectMoved.bind(this),
       objectScaled: this._onObjectScaled.bind(this),
@@ -292,6 +297,9 @@ class ImageEditor {
   _attachGraphicsEvents() {
     this._graphics.on({
       [MOUSE_DOWN]: this._handlers.mousedown,
+      [MOUSE_UP]: this._handlers.mouseup,
+      [MOUSE_MOVE]: this._handlers.mousemove,
+      [MOUSE_WHEEL]: this._handlers.mousewheel,
       [OBJECT_MOVED]: this._handlers.objectMoved,
       [OBJECT_SCALED]: this._handlers.objectScaled,
       [OBJECT_ROTATED]: this._handlers.objectRotated,
@@ -400,6 +408,18 @@ class ImageEditor {
      */
 
     this.fire(events.MOUSE_DOWN, event, originPointer);
+  }
+
+  _onMouseUp(event, originPointer) {
+    this.fire(events.MOUSE_UP, event, originPointer);
+  }
+
+  _onMouseMove(event, originPointer) {
+    this.fire(events.MOUSE_MOVE, event, originPointer);
+  }
+
+  _onMouseWheel(event, originPointer) {
+    this.fire(events.MOUSE_WHEEL, event, originPointer);
   }
 
   /**
@@ -1709,7 +1729,6 @@ class ImageEditor {
   }
 }
 
-action.mixin(ImageEditor);
 CustomEvents.mixin(ImageEditor);
 
 export default ImageEditor;

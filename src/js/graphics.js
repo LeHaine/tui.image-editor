@@ -140,6 +140,9 @@ class Graphics {
      */
     this._handler = {
       onMouseDown: this._onMouseDown.bind(this),
+      onMouseUp: this._onMouseUp.bind(this),
+      onMouseMove: this._onMouseMove.bind(this),
+      onMouseWheel: this._onMouseWheel.bind(this),
       onObjectAdded: this._onObjectAdded.bind(this),
       onObjectRemoved: this._onObjectRemoved.bind(this),
       onObjectMoved: this._onObjectMoved.bind(this),
@@ -1090,6 +1093,9 @@ class Graphics {
     const handler = this._handler;
     canvas.on({
       'mouse:down': handler.onMouseDown,
+      'mouse:up': handler.onMouseUp,
+      'mouse:move': handler.onMouseMove,
+      'mouse:wheel': handler.onMouseWheel,
       'object:added': handler.onObjectAdded,
       'object:removed': handler.onObjectRemoved,
       'object:moving': handler.onObjectMoved,
@@ -1122,6 +1128,27 @@ class Graphics {
     }
 
     this.fire(events.MOUSE_DOWN, event, originPointer);
+  }
+
+  _onMouseUp(fEvent) {
+    const { e: event } = fEvent;
+    const originPointer = this._canvas.getPointer(event);
+
+    this.fire(events.MOUSE_UP, event, originPointer);
+  }
+
+  _onMouseMove(fEvent) {
+    const { e: event } = fEvent;
+    const originPointer = this._canvas.getPointer(event);
+
+    this.fire(events.MOUSE_MOVE, event, originPointer);
+  }
+
+  _onMouseWheel(fEvent) {
+    const { e: event } = fEvent;
+    const originPointer = this._canvas.getPointer(event);
+
+    this.fire(events.MOUSE_WHEEL, event, originPointer);
   }
 
   /**

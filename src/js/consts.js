@@ -158,6 +158,7 @@ export const eventNames = {
   MOUSE_DOWN: 'mousedown',
   MOUSE_UP: 'mouseup',
   MOUSE_MOVE: 'mousemove',
+  MOUSE_WHEEL: 'mousewheel',
   // UNDO/REDO Events
   REDO_STACK_CHANGED: 'redoStackChanged',
   UNDO_STACK_CHANGED: 'undoStackChanged',
