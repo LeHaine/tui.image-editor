@@ -457,6 +457,15 @@ class Graphics {
     this._drawingMode = drawingModes.NORMAL;
   }
 
+  canvasZoom(zoom) {
+    const canvas = this.getCanvas();
+    canvas.setZoom(zoom);
+  }
+
+  getCanvasZoom() {
+    return this.getCanvas().getZoom();
+  }
+
   /**
    * Change zoom of canvas
    * @param {{x: number, y: number}} center - center of zoom

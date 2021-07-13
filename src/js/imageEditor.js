@@ -671,6 +671,18 @@ class ImageEditor {
     this._graphics.resetZoom();
   }
 
+  canvasZoom(zoom) {
+    this._graphics.canvasZoom(zoom);
+  }
+
+  getCanvasZoom() {
+    return this._graphics().getCanvasZoom();
+  }
+
+  resetCanvasZoom() {
+    return this._graphics().canvasZoom(1.0);
+  }
+
   /**
    * Load image from file
    * @param {File} imgFile - Image file
