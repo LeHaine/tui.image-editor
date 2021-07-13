@@ -60,7 +60,7 @@ const backstoreOnly = {
  * @ignore
  */
 class Graphics {
-  constructor(element, { cssMaxWidth, cssMaxHeight } = {}) {
+  constructor(element, { cssMaxWidth, cssMaxHeight, preserveObjectStacking } = {}) {
     /**
      * Fabric image instance
      * @type {fabric.Image}
@@ -156,7 +156,7 @@ class Graphics {
     };
 
     this._setObjectCachingToFalse();
-    this._setCanvasElement(element);
+    this._setCanvasElement(element, preserveObjectStacking);
     this._createDrawingModeInstances();
     this._createComponents();
     this._attachCanvasEvents();
@@ -971,9 +971,10 @@ class Graphics {
   /**
    * Set canvas element to fabric.Canvas
    * @param {Element|string} element - Wrapper or canvas element or selector
+   * @param {Boolean} preserveObjectStacking - preserve object stacking or not
    * @private
    */
-  _setCanvasElement(element) {
+  _setCanvasElement(element, preserveObjectStacking) {
     let selectedElement;
     let canvasElement;
 
@@ -991,6 +992,7 @@ class Graphics {
     this._canvas = new fabric.Canvas(canvasElement, {
       containerClass: 'tui-image-editor-canvas-container',
       enableRetinaScaling: false,
+      preserveObjectStacking,
     });
   }
 

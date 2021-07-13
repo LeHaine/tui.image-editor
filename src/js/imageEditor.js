@@ -191,6 +191,9 @@ class ImageEditor {
     this._graphics = new Graphics(wrapper, {
       cssMaxWidth: options.cssMaxWidth,
       cssMaxHeight: options.cssMaxHeight,
+      preserveObjectStacking: options.preserveObjectStacking
+        ? options.preserveObjectStacking
+        : false,
     });
 
     /**
