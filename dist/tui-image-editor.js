@@ -12865,9 +12865,12 @@ var Graphics = function () {
     }
   }, {
     key: 'canvasZoom',
-    value: function canvasZoom(zoom) {
+    value: function canvasZoom(_ref2, zoomLevel) {
+      var x = _ref2.x,
+          y = _ref2.y;
+
       var canvas = this.getCanvas();
-      canvas.setZoom(zoom);
+      canvas.zoomToPint({ x: x, y: y }, zoomLevel);
     }
   }, {
     key: 'getCanvasZoom',
@@ -12883,9 +12886,9 @@ var Graphics = function () {
 
   }, {
     key: 'zoom',
-    value: function zoom(_ref2, zoomLevel) {
-      var x = _ref2.x,
-          y = _ref2.y;
+    value: function zoom(_ref3, zoomLevel) {
+      var x = _ref3.x,
+          y = _ref3.y;
 
       var zoom = this.getComponent(_consts.componentNames.ZOOM);
 
@@ -16095,8 +16098,12 @@ var ImageEditor = function () {
     }
   }, {
     key: 'canvasZoom',
-    value: function canvasZoom(zoom) {
-      this._graphics.canvasZoom(zoom);
+    value: function canvasZoom(_ref3) {
+      var x = _ref3.x,
+          y = _ref3.y,
+          zoomLevel = _ref3.zoomLevel;
+
+      this._graphics.canvasZoom({ x: x, y: y, zoomLevel: zoomLevel });
     }
   }, {
     key: 'getCanvasZoom',
