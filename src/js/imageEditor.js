@@ -628,10 +628,9 @@ class ImageEditor {
   /**
    * Clear history
    */
-  _clearHistory() {
-    if (this.ui) {
-      this.ui.clearHistory();
-    }
+  clearHistory() {
+    this._invoker.clearUndoStack();
+    this._invoker.clearRedoStack();
   }
 
   /**
