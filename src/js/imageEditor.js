@@ -671,8 +671,8 @@ class ImageEditor {
     this._graphics.resetZoom();
   }
 
-  canvasZoom(zoom) {
-    this._graphics.canvasZoom(zoom);
+  canvasZoom({ x, y, zoomLevel }) {
+    this._graphics.canvasZoom({ x, y, zoomLevel });
   }
 
   getCanvasZoom() {

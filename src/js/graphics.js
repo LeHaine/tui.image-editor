@@ -457,9 +457,9 @@ class Graphics {
     this._drawingMode = drawingModes.NORMAL;
   }
 
-  canvasZoom(zoom) {
+  canvasZoom({ x, y }, zoomLevel) {
     const canvas = this.getCanvas();
-    canvas.setZoom(zoom);
+    canvas.zoomToPint({ x, y }, zoomLevel);
   }
 
   getCanvasZoom() {
