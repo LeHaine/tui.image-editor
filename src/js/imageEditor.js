@@ -4,7 +4,6 @@
  */
 import snippet from 'tui-code-snippet';
 import Invoker from '@/invoker';
-import UI from '@/ui';
 import action from '@/action';
 import commandFactory from '@/factory/command';
 import Graphics from '@/graphics';
@@ -176,18 +175,6 @@ class ImageEditor {
     this.activeObjectId = null;
 
     /**
-     * UI instance
-     * @type {Ui}
-     */
-    if (options.includeUI) {
-      const UIOption = options.includeUI;
-      UIOption.usageStatistics = options.usageStatistics;
-
-      this.ui = new UI(wrapper, UIOption, this.getActions());
-      options = this.ui.setUiDefaultSelectionStyle(options);
-    }
-
-    /**
      * Invoker
      * @type {Invoker}
      * @private
@@ -199,7 +186,7 @@ class ImageEditor {
      * @type {Graphics}
      * @private
      */
-    this._graphics = new Graphics(this.ui ? this.ui.getEditorArea() : wrapper, {
+    this._graphics = new Graphics(wrapper, {
       cssMaxWidth: options.cssMaxWidth,
       cssMaxHeight: options.cssMaxHeight,
     });
@@ -240,27 +227,7 @@ class ImageEditor {
     if (options.usageStatistics) {
       sendHostName();
     }
-
-    if (this.ui) {
-      this.ui.initCanvas();
-      this.setReAction();
-      this._attachColorPickerInputBoxEvents();
-    }
     fabric.enableGLFiltering = false;
-  }
-
-  _attachColorPickerInputBoxEvents() {
-    this.ui.on(events.INPUT_BOX_EDITING_STARTED, () => {
-      this.isColorPickerInputBoxEditing = true;
-    });
-    this.ui.on(events.INPUT_BOX_EDITING_STOPPED, () => {
-      this.isColorPickerInputBoxEditing = false;
-    });
-  }
-
-  _detachColorPickerInputBoxEvents() {
-    this.ui.off(events.INPUT_BOX_EDITING_STARTED);
-    this.ui.off(events.INPUT_BOX_EDITING_STOPPED);
   }
 
   /**
@@ -294,15 +261,7 @@ class ImageEditor {
    * @private
    */
   _attachInvokerEvents() {
-    const {
-      UNDO_STACK_CHANGED,
-      REDO_STACK_CHANGED,
-      EXECUTE_COMMAND,
-      AFTER_UNDO,
-      AFTER_REDO,
-      HAND_STARTED,
-      HAND_STOPPED,
-    } = events;
+    const { UNDO_STACK_CHANGED, REDO_STACK_CHANGED } = events;
 
     /**
      * Undo stack changed event
@@ -324,17 +283,6 @@ class ImageEditor {
      * });
      */
     this._invoker.on(REDO_STACK_CHANGED, this.fire.bind(this, REDO_STACK_CHANGED));
-
-    if (this.ui) {
-      const canvas = this._graphics.getCanvas();
-
-      this._invoker.on(EXECUTE_COMMAND, (command) => this.ui.fire(EXECUTE_COMMAND, command));
-      this._invoker.on(AFTER_UNDO, (command) => this.ui.fire(AFTER_UNDO, command));
-      this._invoker.on(AFTER_REDO, (command) => this.ui.fire(AFTER_REDO, command));
-
-      canvas.on(HAND_STARTED, () => this.ui.fire(HAND_STARTED));
-      canvas.on(HAND_STOPPED, () => this.ui.fire(HAND_STOPPED));
-    }
   }
 
   /**
@@ -614,15 +562,6 @@ class ImageEditor {
    */
   changeSelectableAll(selectable) {
     this._graphics.changeSelectableAll(selectable);
-  }
-
-  /**
-   * Init history
-   */
-  _initHistory() {
-    if (this.ui) {
-      this.ui.initHistory();
-    }
   }
 
   /**
@@ -1586,11 +1525,6 @@ class ImageEditor {
     this._detachDomEvents();
     this._graphics.destroy();
     this._graphics = null;
-
-    if (this.ui) {
-      this._detachColorPickerInputBoxEvents();
-      this.ui.destroy();
-    }
 
     forEach(
       this,
