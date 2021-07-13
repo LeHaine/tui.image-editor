@@ -459,7 +459,7 @@ class Graphics {
 
   canvasZoom({ x, y }, zoomLevel) {
     const canvas = this.getCanvas();
-    canvas.zoomToPint({ x, y }, zoomLevel);
+    canvas.zoomToPoint({ x, y }, zoomLevel);
   }
 
   getCanvasZoom() {
