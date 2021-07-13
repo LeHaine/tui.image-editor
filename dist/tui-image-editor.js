@@ -16101,12 +16101,12 @@ var ImageEditor = function () {
   }, {
     key: 'getCanvasZoom',
     value: function getCanvasZoom() {
-      return this._graphics().getCanvasZoom();
+      return this._graphics.getCanvasZoom();
     }
   }, {
     key: 'resetCanvasZoom',
     value: function resetCanvasZoom() {
-      return this._graphics().canvasZoom(1.0);
+      return this._graphics.canvasZoom(1.0);
     }
 
     /**
