@@ -12863,6 +12863,17 @@ var Graphics = function () {
       }
       this._drawingMode = _consts.drawingModes.NORMAL;
     }
+  }, {
+    key: 'canvasZoom',
+    value: function canvasZoom(zoom) {
+      var canvas = this.getCanvas();
+      canvas.setZoom(zoom);
+    }
+  }, {
+    key: 'getCanvasZoom',
+    value: function getCanvasZoom() {
+      return this.getCanvas().getZoom();
+    }
 
     /**
      * Change zoom of canvas
@@ -16081,6 +16092,21 @@ var ImageEditor = function () {
     key: 'resetZoom',
     value: function resetZoom() {
       this._graphics.resetZoom();
+    }
+  }, {
+    key: 'canvasZoom',
+    value: function canvasZoom(zoom) {
+      this._graphics.canvasZoom(zoom);
+    }
+  }, {
+    key: 'getCanvasZoom',
+    value: function getCanvasZoom() {
+      return this._graphics().getCanvasZoom();
+    }
+  }, {
+    key: 'resetCanvasZoom',
+    value: function resetCanvasZoom() {
+      return this._graphics().canvasZoom(1.0);
     }
 
     /**
