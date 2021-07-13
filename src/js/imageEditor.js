@@ -676,11 +676,11 @@ class ImageEditor {
   }
 
   getCanvasZoom() {
-    return this._graphics().getCanvasZoom();
+    return this._graphics.getCanvasZoom();
   }
 
   resetCanvasZoom() {
-    return this._graphics().canvasZoom(1.0);
+    return this._graphics.canvasZoom(1.0);
   }
 
   /**
