@@ -14384,11 +14384,12 @@ var Graphics = function () {
     }
   }, {
     key: 'loadFromJSON',
-    value: function loadFromJSON(json) {
+    value: function loadFromJSON(json, width, height) {
       var _this12 = this;
 
       return new _util.Promise(function (resolve) {
         _this12._canvas.loadFromJSON(json, function () {
+          _this12.setCanvasDimension(width, height);
           _this12._canvas.renderAll.bind(_this12._canvas);
           resolve();
         });
@@ -16330,7 +16331,7 @@ var ImageEditor = function () {
         return _util.Promise.reject(_consts.rejectMessages.invalidParameters);
       }
 
-      return this.execute(_consts.commandNames.LOAD_JSON, json, width, height);
+      return this._graphics.loadFromJson(json, width, height);
     }
 
     /**
