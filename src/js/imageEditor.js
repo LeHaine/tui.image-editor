@@ -731,12 +731,12 @@ class ImageEditor {
     return this.execute(commands.LOAD_IMAGE, imageName, url);
   }
 
-  loadFromJson(json, width = 600, height = 400) {
+  loadFromJSON(json, width = 600, height = 400) {
     if (!json) {
       return Promise.reject(rejectMessages.invalidParameters);
     }
 
-    return this._graphics.loadFromJson(json, width, height);
+    return this._graphics.loadFromJSON(json, width, height);
   }
 
   /**

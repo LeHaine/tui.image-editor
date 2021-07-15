@@ -16322,8 +16322,8 @@ var ImageEditor = function () {
       return this.execute(_consts.commandNames.LOAD_IMAGE, imageName, url);
     }
   }, {
-    key: 'loadFromJson',
-    value: function loadFromJson(json) {
+    key: 'loadFromJSON',
+    value: function loadFromJSON(json) {
       var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 600;
       var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 400;
 
@@ -16331,7 +16331,7 @@ var ImageEditor = function () {
         return _util.Promise.reject(_consts.rejectMessages.invalidParameters);
       }
 
-      return this._graphics.loadFromJson(json, width, height);
+      return this._graphics.loadFromJSON(json, width, height);
     }
 
     /**
