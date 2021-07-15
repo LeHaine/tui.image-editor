@@ -731,6 +731,14 @@ class ImageEditor {
     return this.execute(commands.LOAD_IMAGE, imageName, url);
   }
 
+  loadFromJson(json, width = 600, height = 400) {
+    if (!json) {
+      return Promise.reject(rejectMessages.invalidParameters);
+    }
+
+    return this.execute(commands.LOAD_JSON, json, width, height);
+  }
+
   /**
    * Add image object on canvas
    * @param {string} imgUrl - Image url to make object
@@ -1737,10 +1745,6 @@ class ImageEditor {
 
   toJSON() {
     return this._graphics.toJSON();
-  }
-
-  loadFromJSON(json) {
-    return this._graphics.loadFromJSON(json);
   }
 }
 
