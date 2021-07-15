@@ -6870,6 +6870,124 @@ exports.default = ImageLoader;
 
 /***/ }),
 
+/***/ "./src/js/component/jsonLoader.js":
+/*!****************************************!*\
+  !*** ./src/js/component/jsonLoader.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _component = __webpack_require__(/*! @/interface/component */ "./src/js/interface/component.js");
+
+var _component2 = _interopRequireDefault(_component);
+
+var _util = __webpack_require__(/*! @/util */ "./src/js/util.js");
+
+var _consts = __webpack_require__(/*! @/consts */ "./src/js/consts.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author NHN. FE Development Team <dl_javascript@nhn.com>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @fileoverview Image loader
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * JsonLoader components
+ * @extends {Component}
+ * @class JsonLoader
+ * @param {Graphics} graphics - Graphics instance
+ * @ignore
+ */
+var JsonLoader = function (_Component) {
+  _inherits(JsonLoader, _Component);
+
+  function JsonLoader(graphics) {
+    _classCallCheck(this, JsonLoader);
+
+    return _possibleConstructorReturn(this, (JsonLoader.__proto__ || Object.getPrototypeOf(JsonLoader)).call(this, _consts.componentNames.JSON_LOADER, graphics));
+  }
+
+  /**
+   * Load json
+   * @param {?string} json - The fabricjs json
+   * @param {int} width - width in px
+   * @param {int} height - height in px
+   * @returns {Promise}
+   */
+
+
+  _createClass(JsonLoader, [{
+    key: 'load',
+    value: function load(json) {
+      var _this2 = this;
+
+      var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 600;
+      var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 400;
+
+      var promise = void 0;
+
+      if (!json) {
+        // Back to the initial state, not error.
+        var canvas = this.getCanvas();
+
+        canvas.backgroundImage = null;
+        canvas.renderAll();
+
+        promise = new _util.Promise(function (resolve) {
+          _this2.setCanvasImage('', null);
+          resolve();
+        });
+      } else {
+        promise = this._setJson(json).then(function () {
+          _this2.setCanvasImage('', null);
+          _this2.setCanvasDimension(width, height);
+        });
+      }
+
+      return promise;
+    }
+  }, {
+    key: '_setJson',
+    value: function _setJson(json) {
+      var _this3 = this;
+
+      if (!json) {
+        return _util.Promise.reject(_consts.rejectMessages.loadJson);
+      }
+
+      return new _util.Promise(function (resolve) {
+        var canvas = _this3.getCanvas();
+
+        canvas.loadFromJSON(json, function () {
+          canvas.renderAll.bind(canvas);
+          resolve();
+        });
+      });
+    }
+  }]);
+
+  return JsonLoader;
+}(_component2.default);
+
+exports.default = JsonLoader;
+
+/***/ }),
+
 /***/ "./src/js/component/line.js":
 /*!**********************************!*\
   !*** ./src/js/component/line.js ***!
@@ -9885,7 +10003,7 @@ var filterType = exports.filterType = {
  * Component names
  * @type {Object.<string, string>}
  */
-var componentNames = exports.componentNames = (0, _util.keyMirror)('IMAGE_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE', 'ZOOM', 'RESIZE');
+var componentNames = exports.componentNames = (0, _util.keyMirror)('IMAGE_LOADER', 'JSON_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE', 'ZOOM', 'RESIZE');
 
 /**
  * Shape default option
@@ -9918,6 +10036,7 @@ var CROPZONE_DEFAULT_OPTIONS = exports.CROPZONE_DEFAULT_OPTIONS = {
 var commandNames = exports.commandNames = {
   CLEAR_OBJECTS: 'clearObjects',
   LOAD_IMAGE: 'loadImage',
+  LOAD_JSON: 'loadJSON',
   FLIP_IMAGE: 'flip',
   ROTATE_IMAGE: 'rotate',
   ADD_OBJECT: 'addObject',
@@ -9996,6 +10115,7 @@ var selectorNames = exports.selectorNames = {
  */
 var historyNames = exports.historyNames = {
   LOAD_IMAGE: 'Load',
+  LOAD_JSON: 'Load JSON',
   LOAD_MASK_IMAGE: 'Mask',
   ADD_MASK_IMAGE: 'Mask',
   ADD_IMAGE_OBJECT: 'Mask',
@@ -10082,6 +10202,7 @@ var rejectMessages = exports.rejectMessages = {
   invalidParameters: 'Invalid parameters.',
   isLock: 'The executing command state is locked.',
   loadImage: 'The background image is empty.',
+  loadJson: 'The JSON is invalid',
   loadingImageFailed: 'Invalid image loaded.',
   noActiveObject: 'There is no active object.',
   noObject: 'The object is not in canvas.',
@@ -12266,6 +12387,10 @@ var _imageLoader = __webpack_require__(/*! @/component/imageLoader */ "./src/js/
 
 var _imageLoader2 = _interopRequireDefault(_imageLoader);
 
+var _jsonLoader = __webpack_require__(/*! @/component/jsonLoader */ "./src/js/component/jsonLoader.js");
+
+var _jsonLoader2 = _interopRequireDefault(_jsonLoader);
+
 var _cropper = __webpack_require__(/*! @/component/cropper */ "./src/js/component/cropper.js");
 
 var _cropper2 = _interopRequireDefault(_cropper);
@@ -13044,6 +13169,23 @@ var Graphics = function () {
       this.adjustCanvasDimensionBase(this.canvasImage.scale(1));
     }
   }, {
+    key: 'setCanvasDimension',
+    value: function setCanvasDimension(width, height) {
+      var maxDimension = this._calcMaxDimension(width, height);
+
+      this.setCanvasCssDimension({
+        width: '100%',
+        height: '100%', // Set height '' for IE9
+        'max-width': maxDimension.width + 'px',
+        'max-height': maxDimension.height + 'px'
+      });
+
+      this.setCanvasBackstoreDimension({
+        width: width,
+        height: height
+      });
+    }
+  }, {
     key: 'adjustCanvasDimensionBase',
     value: function adjustCanvasDimensionBase() {
       var canvasImage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -13568,6 +13710,7 @@ var Graphics = function () {
     key: '_createComponents',
     value: function _createComponents() {
       this._register(this._componentMap, new _imageLoader2.default(this));
+      this._register(this._componentMap, new _jsonLoader2.default(this));
       this._register(this._componentMap, new _cropper2.default(this));
       this._register(this._componentMap, new _flip2.default(this));
       this._register(this._componentMap, new _rotation2.default(this));
@@ -16177,6 +16320,18 @@ var ImageEditor = function () {
 
       return this.execute(_consts.commandNames.LOAD_IMAGE, imageName, url);
     }
+  }, {
+    key: 'loadFromJson',
+    value: function loadFromJson(json) {
+      var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 600;
+      var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 400;
+
+      if (!json) {
+        return _util.Promise.reject(_consts.rejectMessages.invalidParameters);
+      }
+
+      return this.execute(_consts.commandNames.LOAD_JSON, json, width, height);
+    }
 
     /**
      * Add image object on canvas
@@ -17350,11 +17505,6 @@ var ImageEditor = function () {
     key: 'toJSON',
     value: function toJSON() {
       return this._graphics.toJSON();
-    }
-  }, {
-    key: 'loadFromJSON',
-    value: function loadFromJSON(json) {
-      return this._graphics.loadFromJSON(json);
     }
   }]);
 
