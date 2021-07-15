@@ -14242,7 +14242,14 @@ var Graphics = function () {
   }, {
     key: 'loadFromJSON',
     value: function loadFromJSON(json) {
-      this._canvas.loadFromJSON(json, this._canvas.renderAll.bind(this._canvas));
+      var _this12 = this;
+
+      return new _util.Promise(function (resolve) {
+        _this12._canvas.loadFromJSON(json, function () {
+          _this12._canvas.renderAll.bind(_this12._canvas);
+          resolve();
+        });
+      });
     }
   }]);
 
@@ -17347,7 +17354,7 @@ var ImageEditor = function () {
   }, {
     key: 'loadFromJSON',
     value: function loadFromJSON(json) {
-      this._graphics.loadFromJSON(json);
+      return this._graphics.loadFromJSON(json);
     }
   }]);
 
