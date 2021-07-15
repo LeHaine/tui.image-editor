@@ -1740,7 +1740,7 @@ class ImageEditor {
   }
 
   loadFromJSON(json) {
-    this._graphics.loadFromJSON(json);
+    return this._graphics.loadFromJSON(json);
   }
 }
 

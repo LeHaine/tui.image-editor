@@ -1579,7 +1579,12 @@ class Graphics {
   }
 
   loadFromJSON(json) {
-    this._canvas.loadFromJSON(json, this._canvas.renderAll.bind(this._canvas));
+    return new Promise((resolve) => {
+      this._canvas.loadFromJSON(json, () => {
+        this._canvas.renderAll.bind(this._canvas);
+        resolve();
+      });
+    });
   }
 }
 
