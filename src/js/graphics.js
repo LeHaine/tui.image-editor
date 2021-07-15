@@ -1596,9 +1596,10 @@ class Graphics {
     return this._canvas.toJSON();
   }
 
-  loadFromJSON(json) {
+  loadFromJSON(json, width, height) {
     return new Promise((resolve) => {
       this._canvas.loadFromJSON(json, () => {
+        this.setCanvasDimension(width, height);
         this._canvas.renderAll.bind(this._canvas);
         resolve();
       });
