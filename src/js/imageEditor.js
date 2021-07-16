@@ -736,7 +736,7 @@ class ImageEditor {
       return Promise.reject(rejectMessages.invalidParameters);
     }
 
-    return this._graphics.loadFromJson(json, width, height);
+    return this.execute(commands.LOAD_JSON, json, width, height);
   }
 
   /**
