@@ -196,7 +196,6 @@ class Text extends Component {
     return new Promise((resolve) => {
       const canvas = this.getCanvas();
       let newText = null;
-      let selectionStyle = fObjectOptions.SELECTION_STYLE;
       let styles = this._defaultStyles;
 
       this._setInitPos(options.position);
@@ -210,15 +209,7 @@ class Text extends Component {
       }
 
       newText = new fabric.IText(text, styles);
-      selectionStyle = snippet.extend({}, selectionStyle, {
-        originX: 'left',
-        originY: 'top',
-      });
-
-      newText.set(selectionStyle);
-      newText.on({
-        mouseup: this._onFabricMouseUp.bind(this),
-      });
+      this.initialize(newText);
 
       canvas.add(newText);
 
@@ -233,6 +224,19 @@ class Text extends Component {
 
       this.isPrevEditing = true;
       resolve(this.graphics.createObjectProperties(newText));
+    });
+  }
+
+  initialize(text) {
+    let selectionStyle = fObjectOptions.SELECTION_STYLE;
+    selectionStyle = snippet.extend({}, selectionStyle, {
+      originX: 'left',
+      originY: 'top',
+    });
+
+    text.set(selectionStyle);
+    text.on({
+      mouseup: this._onFabricMouseUp.bind(this),
     });
   }
 

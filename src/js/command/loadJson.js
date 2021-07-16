@@ -5,13 +5,14 @@
 import commandFactory from '@/factory/command';
 import { componentNames, commandNames } from '@/consts';
 
-const { JSON_LOADER } = componentNames;
+const { JSON_LOADER, TEXT } = componentNames;
 
 const command = {
   name: commandNames.LOAD_JSON,
 
   execute(graphics, json) {
     const loader = graphics.getComponent(JSON_LOADER);
+    const texComp = graphics.getComponent(TEXT);
 
     const objects = graphics.removeAll(true).filter((objectItem) => objectItem.type !== 'cropzone');
 
@@ -22,6 +23,14 @@ const command = {
     return loader.load(json).then((objs) => {
       // todo handle setting objs
       console.log(objs);
+
+      objs.map((obj) => {
+        if (obj.type === 'i-text') {
+          texComp.initialize(obj);
+        }
+
+        return obj;
+      });
     });
   },
 };

@@ -4751,7 +4751,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author NHN. FE Development Team <dl_javascript@nhn.com>
  * @fileoverview Load a background (main) image
  */
-var JSON_LOADER = _consts.componentNames.JSON_LOADER;
+var JSON_LOADER = _consts.componentNames.JSON_LOADER,
+    TEXT = _consts.componentNames.TEXT;
 
 
 var command = {
@@ -4759,6 +4760,7 @@ var command = {
 
   execute: function execute(graphics, json) {
     var loader = graphics.getComponent(JSON_LOADER);
+    var texComp = graphics.getComponent(TEXT);
 
     var objects = graphics.removeAll(true).filter(function (objectItem) {
       return objectItem.type !== 'cropzone';
@@ -4771,6 +4773,14 @@ var command = {
     return loader.load(json).then(function (objs) {
       // todo handle setting objs
       console.log(objs);
+
+      objs.map(function (obj) {
+        if (obj.type === 'i-text') {
+          texComp.initialize(obj);
+        }
+
+        return obj;
+      });
     });
   }
 };
@@ -8602,7 +8612,6 @@ var Text = function (_Component) {
       return new _util.Promise(function (resolve) {
         var canvas = _this4.getCanvas();
         var newText = null;
-        var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
         var styles = _this4._defaultStyles;
 
         _this4._setInitPos(options.position);
@@ -8616,15 +8625,7 @@ var Text = function (_Component) {
         }
 
         newText = new _fabric2.default.IText(text, styles);
-        selectionStyle = _tuiCodeSnippet2.default.extend({}, selectionStyle, {
-          originX: 'left',
-          originY: 'top'
-        });
-
-        newText.set(selectionStyle);
-        newText.on({
-          mouseup: _this4._onFabricMouseUp.bind(_this4)
-        });
+        _this4.initialize(newText);
 
         canvas.add(newText);
 
@@ -8639,6 +8640,20 @@ var Text = function (_Component) {
 
         _this4.isPrevEditing = true;
         resolve(_this4.graphics.createObjectProperties(newText));
+      });
+    }
+  }, {
+    key: 'initialize',
+    value: function initialize(text) {
+      var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
+      selectionStyle = _tuiCodeSnippet2.default.extend({}, selectionStyle, {
+        originX: 'left',
+        originY: 'top'
+      });
+
+      text.set(selectionStyle);
+      text.on({
+        mouseup: this._onFabricMouseUp.bind(this)
       });
     }
 
