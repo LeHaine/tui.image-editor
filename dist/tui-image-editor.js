@@ -14250,7 +14250,19 @@ var Graphics = function () {
 
       return new _util.Promise(function (resolve) {
         _this12._canvas.loadFromJSON(json, function () {
-          _this12._canvas.renderAll.bind(_this12._canvas);
+          _this12._canvas.renderAll();
+          resolve();
+        });
+      });
+    }
+  }, {
+    key: 'setBackgroundColor',
+    value: function setBackgroundColor(color) {
+      var _this13 = this;
+
+      return new _util.Promise(function (resolve) {
+        _this13._canvas.setBackgroundColor(color, function () {
+          _this13._canvas.renderAll();
           resolve();
         });
       });
@@ -17360,6 +17372,11 @@ var ImageEditor = function () {
     key: 'loadFromJSON',
     value: function loadFromJSON(json) {
       return this._graphics.loadFromJSON(json);
+    }
+  }, {
+    key: 'setBackgroundColor',
+    value: function setBackgroundColor(color) {
+      return this._graphics.setBackgroundColor(color);
     }
   }]);
 
