@@ -189,7 +189,7 @@ class ImageEditor {
      * @private
      */
     this._graphics = new Graphics(wrapper, {
-      background: options.background ? options.background : 'transparent',
+      backgroundColor: options.backgroundColor ? options.backgroundColor : 'transparent',
       cssMaxWidth: options.cssMaxWidth,
       cssMaxHeight: options.cssMaxHeight,
       preserveObjectStacking: options.preserveObjectStacking
