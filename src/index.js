@@ -16,6 +16,7 @@ import '@/command/changeTextStyle';
 import '@/command/clearObjects';
 import '@/command/flip';
 import '@/command/loadImage';
+import '@/command/loadJson';
 import '@/command/removeFilter';
 import '@/command/removeObject';
 import '@/command/resizeCanvasDimension';

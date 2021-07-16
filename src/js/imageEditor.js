@@ -1741,7 +1741,11 @@ class ImageEditor {
   }
 
   loadFromJSON(json) {
-    return this._graphics.loadFromJSON(json);
+    if (!json) {
+      return Promise.reject(rejectMessages.invalidParameters);
+    }
+
+    return this.execute(commands.LOAD_JSON, json);
   }
 
   setBackgroundColor(color) {

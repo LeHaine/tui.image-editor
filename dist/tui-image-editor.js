@@ -3507,6 +3507,8 @@ __webpack_require__(/*! @/command/flip */ "./src/js/command/flip.js");
 
 __webpack_require__(/*! @/command/loadImage */ "./src/js/command/loadImage.js");
 
+__webpack_require__(/*! @/command/loadJson */ "./src/js/command/loadJson.js");
+
 __webpack_require__(/*! @/command/removeFilter */ "./src/js/command/removeFilter.js");
 
 __webpack_require__(/*! @/command/removeObject */ "./src/js/command/removeObject.js");
@@ -3525,9 +3527,8 @@ __webpack_require__(/*! @/command/resize */ "./src/js/command/resize.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = _imageEditor2.default;
-
 // commands
+module.exports = _imageEditor2.default;
 
 /***/ }),
 
@@ -4715,6 +4716,62 @@ var command = {
     graphics.add(objects);
 
     return loader.load(name, image);
+  }
+};
+
+_command2.default.register(command);
+
+exports.default = command;
+
+/***/ }),
+
+/***/ "./src/js/command/loadJson.js":
+/*!************************************!*\
+  !*** ./src/js/command/loadJson.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _command = __webpack_require__(/*! @/factory/command */ "./src/js/factory/command.js");
+
+var _command2 = _interopRequireDefault(_command);
+
+var _consts = __webpack_require__(/*! @/consts */ "./src/js/consts.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @author NHN. FE Development Team <dl_javascript@nhn.com>
+ * @fileoverview Load a background (main) image
+ */
+var JSON_LOADER = _consts.componentNames.JSON_LOADER;
+
+
+var command = {
+  name: _consts.commandNames.LOAD_JSON,
+
+  execute: function execute(graphics, json) {
+    var loader = graphics.getComponent(JSON_LOADER);
+
+    var objects = graphics.removeAll(true).filter(function (objectItem) {
+      return objectItem.type !== 'cropzone';
+    });
+
+    objects.forEach(function (objectItem) {
+      objectItem.evented = true;
+    });
+
+    return loader.load(json).then(function (objs) {
+      // todo handle setting objs
+      console.log(objs);
+    });
   }
 };
 
@@ -6867,6 +6924,111 @@ var ImageLoader = function (_Component) {
 }(_component2.default);
 
 exports.default = ImageLoader;
+
+/***/ }),
+
+/***/ "./src/js/component/jsonLoader.js":
+/*!****************************************!*\
+  !*** ./src/js/component/jsonLoader.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _component = __webpack_require__(/*! @/interface/component */ "./src/js/interface/component.js");
+
+var _component2 = _interopRequireDefault(_component);
+
+var _util = __webpack_require__(/*! @/util */ "./src/js/util.js");
+
+var _consts = __webpack_require__(/*! @/consts */ "./src/js/consts.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author NHN. FE Development Team <dl_javascript@nhn.com>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @fileoverview JSON loader
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * JsonLoader components
+ * @extends {Component}
+ * @class JsonLoader
+ * @param {Graphics} graphics - Graphics instance
+ * @ignore
+ */
+var JsonLoader = function (_Component) {
+  _inherits(JsonLoader, _Component);
+
+  function JsonLoader(graphics) {
+    _classCallCheck(this, JsonLoader);
+
+    return _possibleConstructorReturn(this, (JsonLoader.__proto__ || Object.getPrototypeOf(JsonLoader)).call(this, _consts.componentNames.JSON_LOADER, graphics));
+  }
+
+  _createClass(JsonLoader, [{
+    key: 'load',
+    value: function load(json) {
+      var promise = void 0;
+
+      if (!json) {
+        // Back to the initial state, not error.
+        var canvas = this.getCanvas();
+
+        canvas.renderAll();
+
+        promise = new _util.Promise(function (resolve) {
+          resolve();
+        });
+      } else {
+        promise = this._loadJson(json).then(function (objs) {
+          return objs;
+        });
+      }
+
+      return promise;
+    }
+  }, {
+    key: '_loadJson',
+    value: function _loadJson(json) {
+      var _this2 = this;
+
+      if (!json) {
+        return _util.Promise.reject(_consts.rejectMessages.loadJson);
+      }
+
+      return new _util.Promise(function (resolve, reject) {
+        var canvas = _this2.getCanvas();
+
+        canvas.loadFromJSON(json, function () {
+          var objs = canvas.getObjects();
+          if (objs) {
+            resolve(objs);
+          } else {
+            reject(_consts.rejectMessages.loadingJsonFailed);
+          }
+        });
+      });
+    }
+  }]);
+
+  return JsonLoader;
+}(_component2.default);
+
+exports.default = JsonLoader;
 
 /***/ }),
 
@@ -9885,7 +10047,7 @@ var filterType = exports.filterType = {
  * Component names
  * @type {Object.<string, string>}
  */
-var componentNames = exports.componentNames = (0, _util.keyMirror)('IMAGE_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE', 'ZOOM', 'RESIZE');
+var componentNames = exports.componentNames = (0, _util.keyMirror)('IMAGE_LOADER', 'JSON_LOADER', 'CROPPER', 'FLIP', 'ROTATION', 'FREE_DRAWING', 'LINE', 'TEXT', 'ICON', 'FILTER', 'SHAPE', 'ZOOM', 'RESIZE');
 
 /**
  * Shape default option
@@ -9918,6 +10080,7 @@ var CROPZONE_DEFAULT_OPTIONS = exports.CROPZONE_DEFAULT_OPTIONS = {
 var commandNames = exports.commandNames = {
   CLEAR_OBJECTS: 'clearObjects',
   LOAD_IMAGE: 'loadImage',
+  LOAD_JSON: 'loadJson',
   FLIP_IMAGE: 'flip',
   ROTATE_IMAGE: 'rotate',
   ADD_OBJECT: 'addObject',
@@ -9996,6 +10159,7 @@ var selectorNames = exports.selectorNames = {
  */
 var historyNames = exports.historyNames = {
   LOAD_IMAGE: 'Load',
+  LOAD_JSON: 'Load Json',
   LOAD_MASK_IMAGE: 'Mask',
   ADD_MASK_IMAGE: 'Mask',
   ADD_IMAGE_OBJECT: 'Mask',
@@ -10082,6 +10246,7 @@ var rejectMessages = exports.rejectMessages = {
   invalidParameters: 'Invalid parameters.',
   isLock: 'The executing command state is locked.',
   loadImage: 'The background image is empty.',
+  loadJson: 'The JSON is invalid',
   loadingImageFailed: 'Invalid image loaded.',
   noActiveObject: 'There is no active object.',
   noObject: 'The object is not in canvas.',
@@ -12348,6 +12513,10 @@ var _resize3 = __webpack_require__(/*! @/drawingMode/resize */ "./src/js/drawing
 
 var _resize4 = _interopRequireDefault(_resize3);
 
+var _jsonLoader = __webpack_require__(/*! ./component/jsonLoader */ "./src/js/component/jsonLoader.js");
+
+var _jsonLoader2 = _interopRequireDefault(_jsonLoader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13572,6 +13741,7 @@ var Graphics = function () {
     key: '_createComponents',
     value: function _createComponents() {
       this._register(this._componentMap, new _imageLoader2.default(this));
+      this._register(this._componentMap, new _jsonLoader2.default(this));
       this._register(this._componentMap, new _cropper2.default(this));
       this._register(this._componentMap, new _flip2.default(this));
       this._register(this._componentMap, new _rotation2.default(this));
@@ -17371,7 +17541,11 @@ var ImageEditor = function () {
   }, {
     key: 'loadFromJSON',
     value: function loadFromJSON(json) {
-      return this._graphics.loadFromJSON(json);
+      if (!json) {
+        return _util.Promise.reject(_consts.rejectMessages.invalidParameters);
+      }
+
+      return this.execute(_consts.commandNames.LOAD_JSON, json);
     }
   }, {
     key: 'setBackgroundColor',

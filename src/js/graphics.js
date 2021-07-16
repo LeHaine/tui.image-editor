@@ -36,6 +36,7 @@ import {
 } from '@/consts';
 import Resize from '@/component/resize';
 import ResizeDrawingMode from '@/drawingMode/resize';
+import JsonLoader from './component/jsonLoader';
 
 const { extend, stamp, isArray, isString, forEachArray, forEachOwnProperties, CustomEvents } =
   snippet;
@@ -1023,6 +1024,7 @@ class Graphics {
    */
   _createComponents() {
     this._register(this._componentMap, new ImageLoader(this));
+    this._register(this._componentMap, new JsonLoader(this));
     this._register(this._componentMap, new Cropper(this));
     this._register(this._componentMap, new Flip(this));
     this._register(this._componentMap, new Rotation(this));
