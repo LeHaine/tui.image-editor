@@ -57,10 +57,14 @@ const backstoreOnly = {
  * @param {Object} [option] - Canvas max width & height of css
  *  @param {number} option.cssMaxWidth - Canvas css-max-width
  *  @param {number} option.cssMaxHeight - Canvas css-max-height
+ *  @param {String} option.backgroundColor - Canvas background color hex code
  * @ignore
  */
 class Graphics {
-  constructor(element, { cssMaxWidth, cssMaxHeight, preserveObjectStacking } = {}) {
+  constructor(
+    element,
+    { cssMaxWidth, cssMaxHeight, preserveObjectStacking, backgroundColor } = {}
+  ) {
     /**
      * Fabric image instance
      * @type {fabric.Image}
@@ -156,7 +160,7 @@ class Graphics {
     };
 
     this._setObjectCachingToFalse();
-    this._setCanvasElement(element, preserveObjectStacking);
+    this._setCanvasElement(element, preserveObjectStacking, backgroundColor);
     this._createDrawingModeInstances();
     this._createComponents();
     this._attachCanvasEvents();
@@ -972,9 +976,10 @@ class Graphics {
    * Set canvas element to fabric.Canvas
    * @param {Element|string} element - Wrapper or canvas element or selector
    * @param {Boolean} preserveObjectStacking - preserve object stacking or not
+   * @param {String} backgroundColor - hex code for canvas background color
    * @private
    */
-  _setCanvasElement(element, preserveObjectStacking) {
+  _setCanvasElement(element, preserveObjectStacking, backgroundColor) {
     let selectedElement;
     let canvasElement;
 
@@ -990,6 +995,7 @@ class Graphics {
     }
 
     this._canvas = new fabric.Canvas(canvasElement, {
+      backgroundColor,
       containerClass: 'tui-image-editor-canvas-container',
       enableRetinaScaling: false,
       preserveObjectStacking,
