@@ -15525,7 +15525,7 @@ var ImageEditor = function () {
      * @private
      */
     this._graphics = new _graphics2.default(wrapper, {
-      background: options.background ? options.background : 'transparent',
+      backgroundColor: options.backgroundColor ? options.backgroundColor : 'transparent',
       cssMaxWidth: options.cssMaxWidth,
       cssMaxHeight: options.cssMaxHeight,
       preserveObjectStacking: options.preserveObjectStacking ? options.preserveObjectStacking : false
