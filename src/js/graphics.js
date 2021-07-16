@@ -1587,7 +1587,16 @@ class Graphics {
   loadFromJSON(json) {
     return new Promise((resolve) => {
       this._canvas.loadFromJSON(json, () => {
-        this._canvas.renderAll.bind(this._canvas);
+        this._canvas.renderAll();
+        resolve();
+      });
+    });
+  }
+
+  setBackgroundColor(color) {
+    return new Promise((resolve) => {
+      this._canvas.setBackgroundColor(color, () => {
+        this._canvas.renderAll();
         resolve();
       });
     });

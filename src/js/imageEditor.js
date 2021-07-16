@@ -1743,6 +1743,10 @@ class ImageEditor {
   loadFromJSON(json) {
     return this._graphics.loadFromJSON(json);
   }
+
+  setBackgroundColor(color) {
+    return this._graphics.setBackgroundColor(color);
+  }
 }
 
 CustomEvents.mixin(ImageEditor);
