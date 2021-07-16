@@ -209,6 +209,13 @@ class Text extends Component {
       }
 
       newText = new fabric.IText(text, styles);
+      let selectionStyle = fObjectOptions.SELECTION_STYLE;
+      selectionStyle = snippet.extend({}, selectionStyle, {
+        originX: 'left',
+        originY: 'top',
+      });
+
+      text.set(selectionStyle);
       this.initialize(newText);
 
       canvas.add(newText);
@@ -228,13 +235,6 @@ class Text extends Component {
   }
 
   initialize(text) {
-    let selectionStyle = fObjectOptions.SELECTION_STYLE;
-    selectionStyle = snippet.extend({}, selectionStyle, {
-      originX: 'left',
-      originY: 'top',
-    });
-
-    text.set(selectionStyle);
     text.on({
       mouseup: this._onFabricMouseUp.bind(this),
     });

@@ -4739,21 +4739,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _consts = __webpack_require__(/*! @/consts */ "./src/js/consts.js");
+
 var _command = __webpack_require__(/*! @/factory/command */ "./src/js/factory/command.js");
 
 var _command2 = _interopRequireDefault(_command);
 
-var _consts = __webpack_require__(/*! @/consts */ "./src/js/consts.js");
+var _tuiCodeSnippet = __webpack_require__(/*! tui-code-snippet */ "tui-code-snippet");
+
+var _tuiCodeSnippet2 = _interopRequireDefault(_tuiCodeSnippet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * @author NHN. FE Development Team <dl_javascript@nhn.com>
- * @fileoverview Load a background (main) image
- */
 var JSON_LOADER = _consts.componentNames.JSON_LOADER,
-    TEXT = _consts.componentNames.TEXT;
-
+    TEXT = _consts.componentNames.TEXT; /**
+                                         * @author NHN. FE Development Team <dl_javascript@nhn.com>
+                                         * @fileoverview Load a background (main) image
+                                         */
 
 var command = {
   name: _consts.commandNames.LOAD_JSON,
@@ -4771,10 +4773,13 @@ var command = {
     });
 
     return loader.load(json).then(function (objs) {
-      // todo handle setting objs
-      console.log(objs);
-
       objs.map(function (obj) {
+        var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
+        selectionStyle = _tuiCodeSnippet2.default.extend({}, selectionStyle, {
+          originX: 'left',
+          originY: 'top'
+        });
+        obj.set(selectionStyle);
         if (obj.type === 'i-text') {
           texComp.initialize(obj);
         }
@@ -8625,6 +8630,13 @@ var Text = function (_Component) {
         }
 
         newText = new _fabric2.default.IText(text, styles);
+        var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
+        selectionStyle = _tuiCodeSnippet2.default.extend({}, selectionStyle, {
+          originX: 'left',
+          originY: 'top'
+        });
+
+        text.set(selectionStyle);
         _this4.initialize(newText);
 
         canvas.add(newText);
@@ -8645,13 +8657,6 @@ var Text = function (_Component) {
   }, {
     key: 'initialize',
     value: function initialize(text) {
-      var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
-      selectionStyle = _tuiCodeSnippet2.default.extend({}, selectionStyle, {
-        originX: 'left',
-        originY: 'top'
-      });
-
-      text.set(selectionStyle);
       text.on({
         mouseup: this._onFabricMouseUp.bind(this)
       });
@@ -12528,7 +12533,7 @@ var _resize3 = __webpack_require__(/*! @/drawingMode/resize */ "./src/js/drawing
 
 var _resize4 = _interopRequireDefault(_resize3);
 
-var _jsonLoader = __webpack_require__(/*! ./component/jsonLoader */ "./src/js/component/jsonLoader.js");
+var _jsonLoader = __webpack_require__(/*! @/component/jsonLoader */ "./src/js/component/jsonLoader.js");
 
 var _jsonLoader2 = _interopRequireDefault(_jsonLoader);
 
