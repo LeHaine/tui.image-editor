@@ -12378,6 +12378,7 @@ var backstoreOnly = {
  * @param {Object} [option] - Canvas max width & height of css
  *  @param {number} option.cssMaxWidth - Canvas css-max-width
  *  @param {number} option.cssMaxHeight - Canvas css-max-height
+ *  @param {String} option.backgroundColor - Canvas background color hex code
  * @ignore
  */
 
@@ -12386,7 +12387,8 @@ var Graphics = function () {
     var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
         cssMaxWidth = _ref.cssMaxWidth,
         cssMaxHeight = _ref.cssMaxHeight,
-        preserveObjectStacking = _ref.preserveObjectStacking;
+        preserveObjectStacking = _ref.preserveObjectStacking,
+        backgroundColor = _ref.backgroundColor;
 
     _classCallCheck(this, Graphics);
 
@@ -12485,7 +12487,7 @@ var Graphics = function () {
     };
 
     this._setObjectCachingToFalse();
-    this._setCanvasElement(element, preserveObjectStacking);
+    this._setCanvasElement(element, preserveObjectStacking, backgroundColor);
     this._createDrawingModeInstances();
     this._createComponents();
     this._attachCanvasEvents();
@@ -13514,12 +13516,13 @@ var Graphics = function () {
      * Set canvas element to fabric.Canvas
      * @param {Element|string} element - Wrapper or canvas element or selector
      * @param {Boolean} preserveObjectStacking - preserve object stacking or not
+     * @param {String} backgroundColor - hex code for canvas background color
      * @private
      */
 
   }, {
     key: '_setCanvasElement',
-    value: function _setCanvasElement(element, preserveObjectStacking) {
+    value: function _setCanvasElement(element, preserveObjectStacking, backgroundColor) {
       var selectedElement = void 0;
       var canvasElement = void 0;
 
@@ -13535,6 +13538,7 @@ var Graphics = function () {
       }
 
       this._canvas = new _fabric2.default.Canvas(canvasElement, {
+        backgroundColor: backgroundColor,
         containerClass: 'tui-image-editor-canvas-container',
         enableRetinaScaling: false,
         preserveObjectStacking: preserveObjectStacking
@@ -15521,6 +15525,7 @@ var ImageEditor = function () {
      * @private
      */
     this._graphics = new _graphics2.default(wrapper, {
+      background: options.background ? options.background : 'transparent',
       cssMaxWidth: options.cssMaxWidth,
       cssMaxHeight: options.cssMaxHeight,
       preserveObjectStacking: options.preserveObjectStacking ? options.preserveObjectStacking : false
