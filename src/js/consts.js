@@ -71,7 +71,6 @@ export const filterType = {
  */
 export const componentNames = keyMirror(
   'IMAGE_LOADER',
-  'JSON_LOADER',
   'CROPPER',
   'FLIP',
   'ROTATION',
@@ -116,7 +115,6 @@ export const CROPZONE_DEFAULT_OPTIONS = {
 export const commandNames = {
   CLEAR_OBJECTS: 'clearObjects',
   LOAD_IMAGE: 'loadImage',
-  LOAD_JSON: 'loadJSON',
   FLIP_IMAGE: 'flip',
   ROTATE_IMAGE: 'rotate',
   ADD_OBJECT: 'addObject',
@@ -195,7 +193,6 @@ export const selectorNames = {
  */
 export const historyNames = {
   LOAD_IMAGE: 'Load',
-  LOAD_JSON: 'Load JSON',
   LOAD_MASK_IMAGE: 'Mask',
   ADD_MASK_IMAGE: 'Mask',
   ADD_IMAGE_OBJECT: 'Mask',
@@ -292,7 +289,6 @@ export const rejectMessages = {
   invalidParameters: 'Invalid parameters.',
   isLock: 'The executing command state is locked.',
   loadImage: 'The background image is empty.',
-  loadJson: 'The JSON is invalid',
   loadingImageFailed: 'Invalid image loaded.',
   noActiveObject: 'There is no active object.',
   noObject: 'The object is not in canvas.',

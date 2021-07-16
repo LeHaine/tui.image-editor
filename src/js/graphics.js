@@ -5,7 +5,6 @@
 import snippet from 'tui-code-snippet';
 import fabric from 'fabric';
 import ImageLoader from '@/component/imageLoader';
-import JsonLoader from '@/component/jsonLoader';
 import Cropper from '@/component/cropper';
 import Flip from '@/component/flip';
 import Rotation from '@/component/rotation';
@@ -593,22 +592,6 @@ class Graphics {
     this.adjustCanvasDimensionBase(this.canvasImage.scale(1));
   }
 
-  setCanvasDimension(width, height) {
-    const maxDimension = this._calcMaxDimension(width, height);
-
-    this.setCanvasCssDimension({
-      width: '100%',
-      height: '100%', // Set height '' for IE9
-      'max-width': `${maxDimension.width}px`,
-      'max-height': `${maxDimension.height}px`,
-    });
-
-    this.setCanvasBackstoreDimension({
-      width,
-      height,
-    });
-  }
-
   adjustCanvasDimensionBase(canvasImage = null) {
     if (!canvasImage) {
       canvasImage = this.canvasImage;
@@ -1034,7 +1017,6 @@ class Graphics {
    */
   _createComponents() {
     this._register(this._componentMap, new ImageLoader(this));
-    this._register(this._componentMap, new JsonLoader(this));
     this._register(this._componentMap, new Cropper(this));
     this._register(this._componentMap, new Flip(this));
     this._register(this._componentMap, new Rotation(this));
