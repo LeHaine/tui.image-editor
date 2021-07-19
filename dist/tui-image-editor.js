@@ -17553,10 +17553,16 @@ var ImageEditor = function () {
     value: function resize(dimensions) {
       return this.execute(_consts.commandNames.RESIZE_IMAGE, dimensions);
     }
+
+    /**
+     * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
+     * @returns {Object} Object representation of an instance
+     */
+
   }, {
     key: 'toJSON',
-    value: function toJSON() {
-      return this._graphics.toJSON();
+    value: function toJSON(propertiesToInclude) {
+      return this._graphics.toJSON(propertiesToInclude);
     }
   }, {
     key: 'loadFromJSON',
