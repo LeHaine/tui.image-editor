@@ -1582,8 +1582,12 @@ class Graphics {
     return resize.resize(dimensions);
   }
 
-  toJSON() {
-    return this._canvas.toJSON();
+  /**
+   * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
+   * @returns {Object} Object representation of an instance
+   */
+  toJSON(propertiesToInclude) {
+    return this._canvas.toJSON(propertiesToInclude);
   }
 
   loadFromJSON(json) {
