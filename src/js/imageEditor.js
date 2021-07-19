@@ -1738,6 +1738,7 @@ class ImageEditor {
 
   /**
    * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
+   * @returns {Object} Object representation of an instance
    */
   toJSON(propertiesToInclude) {
     return this._graphics.toJSON(propertiesToInclude);
