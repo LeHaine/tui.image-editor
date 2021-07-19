@@ -1736,8 +1736,11 @@ class ImageEditor {
     return this.execute(commands.RESIZE_IMAGE, dimensions);
   }
 
-  toJSON() {
-    return this._graphics.toJSON();
+  /**
+   * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
+   */
+  toJSON(propertiesToInclude) {
+    return this._graphics.toJSON(propertiesToInclude);
   }
 
   loadFromJSON(json) {
