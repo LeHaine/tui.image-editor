@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm run bundle --if-present
       - name: Update dist
-      - run: |
+        run: |
           git add .
           git commit -m "update dist"
           git push
