@@ -14428,10 +14428,16 @@ var Graphics = function () {
 
       return resize.resize(dimensions);
     }
+
+    /**
+     * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
+     * @returns {Object} Object representation of an instance
+     */
+
   }, {
     key: 'toJSON',
-    value: function toJSON() {
-      return this._canvas.toJSON();
+    value: function toJSON(propertiesToInclude) {
+      return this._canvas.toJSON(propertiesToInclude);
     }
   }, {
     key: 'loadFromJSON',
