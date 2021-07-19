@@ -29,6 +29,8 @@ jobs:
       - run: npm run bundle --if-present
       - name: Update dist
         run: |
+          git config --global user.email "cli@github.com"
+          git config --global user.name "Github Actions"
           git add .
           git commit -m "update dist"
           git push
