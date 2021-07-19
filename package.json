@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/lehaine/tui.image-editor.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "dist/tui-image-editor.js",
   "files": [
     "src",
