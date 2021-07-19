@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nhn/tui.image-editor.git"
+    "url": "https://github.com/lehaine/tui.image-editor.git"
   },
   "main": "dist/tui-image-editor.js",
   "files": [
@@ -25,7 +25,7 @@
     "fabric"
   ],
   "scripts": {
-    "test": "karma start --no-single-run",
+    "test": "karma start",
     "test:ne": "KARMA_SERVER=ne karma start",
     "test:types": "tsc --project tests/types",
     "bundle": "webpack && webpack -p",
