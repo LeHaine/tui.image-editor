@@ -215,7 +215,7 @@ class Text extends Component {
         originY: 'top',
       });
 
-      text.set(selectionStyle);
+      newText.set(selectionStyle);
       this.initialize(newText);
 
       canvas.add(newText);
