@@ -8636,7 +8636,7 @@ var Text = function (_Component) {
           originY: 'top'
         });
 
-        text.set(selectionStyle);
+        newText.set(selectionStyle);
         _this4.initialize(newText);
 
         canvas.add(newText);
