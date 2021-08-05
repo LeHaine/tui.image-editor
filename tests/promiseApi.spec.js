@@ -16,7 +16,7 @@ describe('Promise API', () => {
     canvas = imageEditor._graphics.getCanvas();
 
     imageEditor.on('objectActivated', (objectProps) => {
-      activeObjectId = objectProps.id;
+      activeObjectId = objectProps.objId;
     });
   });
 
@@ -161,7 +161,7 @@ describe('Promise API', () => {
       .addImageObject(maskImageURL)
       .then((objectProps) => {
         expect(canvas.getObjects().length).toBe(1);
-        expect(objectProps.id).toBe(activeObjectId);
+        expect(objectProps.objId).toBe(activeObjectId);
         done();
       })
       ['catch']((message) => {
@@ -288,7 +288,7 @@ describe('Promise API', () => {
         width: 100,
         height: 100,
       })
-      .then((objectProps) => imageEditor.removeObject(objectProps.id))
+      .then((objectProps) => imageEditor.removeObject(objectProps.objId))
       .then(() => {
         expect(canvas.getObjects().length).toBe(0);
         done();

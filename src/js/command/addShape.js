@@ -32,9 +32,9 @@ const command = {
     const shapeComp = graphics.getComponent(SHAPE);
 
     return shapeComp.add(type, options).then((objectProps) => {
-      const { id } = objectProps;
+      const { objId } = objectProps;
 
-      this.undoData.object = graphics.getObject(id);
+      this.undoData.object = graphics.getObject(objId);
 
       return objectProps;
     });

@@ -104,7 +104,7 @@ imageEditor
     top: 100,
   })
   .then((objectProps) => {
-    console.log(objectProps.id);
+    console.log(objectProps.objId);
   });
 
 imageEditor.addImageObject('path/fileName.jpg').then((objectProps) => {
@@ -132,7 +132,7 @@ imageEditor
     isRegular: false,
   })
   .then((objectProps) => {
-    console.log(objectProps.id);
+    console.log(objectProps.objId);
   });
 
 imageEditor
@@ -148,7 +148,7 @@ imageEditor
     },
   })
   .then((objectProps) => {
-    console.log(objectProps.id);
+    console.log(objectProps.objId);
   });
 
 imageEditor.applyFilter('Grayscale');

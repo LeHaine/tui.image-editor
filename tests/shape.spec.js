@@ -312,7 +312,7 @@ describe('Shape', () => {
           },
         })
         .then((props) => {
-          shapeObj = graphics.getObject(props.id);
+          shapeObj = graphics.getObject(props.objId);
           const fillImage = getFillImageFromShape(shapeObj);
           const { top, height, left, width } = fillImage;
           expect(top).toBe(75);
@@ -338,7 +338,7 @@ describe('Shape', () => {
           },
         })
         .then((props) => {
-          shapeObj = graphics.getObject(props.id);
+          shapeObj = graphics.getObject(props.objId);
           const fillImage = getFillImageFromShape(shapeObj);
           const { top, height, left, width } = fillImage;
           expect(Math.round(top)).toBe(40);

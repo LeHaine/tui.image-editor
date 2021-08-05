@@ -69,16 +69,16 @@ export function makeSelectionUndoData(obj, undoDatumMaker) {
 
 /**
  * Make undo datum
- * @param {number} id - object id
+ * @param {number} objId - object id
  * @param {fabric.Object} obj - selection object
  * @param {boolean} isSelection - whether or not object is selection
  * @returns {Object} undo datum
  * @private
  */
-export function makeSelectionUndoDatum(id, obj, isSelection) {
+export function makeSelectionUndoDatum(objId, obj, isSelection) {
   return isSelection
     ? {
-        id,
+        objId,
         width: obj.width,
         height: obj.height,
         top: obj.top,
@@ -87,5 +87,5 @@ export function makeSelectionUndoDatum(id, obj, isSelection) {
         scaleX: obj.scaleX,
         scaleY: obj.scaleY,
       }
-    : extend({ id }, obj);
+    : extend({ objId }, obj);
 }

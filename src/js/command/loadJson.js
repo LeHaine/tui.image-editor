@@ -21,6 +21,8 @@ const command = {
       objectItem.evented = true;
     });
 
+    this.undoData.objects = objects;
+
     return loader.load(json).then((objs) => {
       objs.map((obj) => {
         let selectionStyle = fObjectOptions.SELECTION_STYLE;
@@ -33,9 +35,19 @@ const command = {
           texComp.initialize(obj);
         }
 
+        graphics._addFabricObject(obj);
+
         return obj;
       });
+
+      return objs;
     });
+  },
+  /**
+   * @returns {Promise}
+   */
+  undo() {
+    return Promise.resolve();
   },
 };
 

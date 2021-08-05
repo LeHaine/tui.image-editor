@@ -17,7 +17,7 @@ const command = {
    */
   execute(graphics, imgUrl) {
     return graphics.addImageObject(imgUrl).then((objectProps) => {
-      this.undoData.object = graphics.getObject(objectProps.id);
+      this.undoData.object = graphics.getObject(objectProps.objId);
 
       return objectProps;
     });

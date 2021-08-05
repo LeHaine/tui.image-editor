@@ -466,7 +466,7 @@ class ImageEditor {
      * imageEditor.on('objectActivated', function(props) {
      *     console.log(props);
      *     console.log(props.type);
-     *     console.log(props.id);
+     *     console.log(props.objId);
      * });
      */
     this.fire(events.OBJECT_ACTIVATED, props);
@@ -738,7 +738,7 @@ class ImageEditor {
    * @returns {Promise<ObjectProps, ErrorMsg>}
    * @example
    * imageEditor.addImageObject('path/fileName.jpg').then(objectProps => {
-   *     console.log(ojectProps.id);
+   *     console.log(ojectProps.objId);
    * });
    */
   addImageObject(imgUrl) {
@@ -1055,7 +1055,7 @@ class ImageEditor {
    *     ry: 100,
    *     isRegular: false
    * }).then(objectProps => {
-   *     console.log(objectProps.id);
+   *     console.log(objectProps.objId);
    * });
    * @example
    * imageEditor.addShape('rect', {
@@ -1069,7 +1069,7 @@ class ImageEditor {
    *     ry: 100,
    *     isRegular: false
    * }).then(objectProps => {
-   *     console.log(objectProps.id);
+   *     console.log(objectProps.objId);
    * });
    */
   addShape(type, options) {
@@ -1149,7 +1149,7 @@ class ImageEditor {
    *         y: 10
    *     }
    * }).then(objectProps => {
-   *     console.log(objectProps.id);
+   *     console.log(objectProps.objId);
    * });
    */
   addText(text, options) {
@@ -1291,7 +1291,7 @@ class ImageEditor {
    * @private
    */
   _onAddObject(objectProps) {
-    const obj = this._graphics.getObject(objectProps.id);
+    const obj = this._graphics.getObject(objectProps.objId);
     this._invoker.fire(events.EXECUTE_COMMAND, getObjectType(obj.type));
     this._pushAddObjectCommand(obj);
   }
@@ -1389,7 +1389,7 @@ class ImageEditor {
    *     left: 100,
    *     top: 100
    * }).then(objectProps => {
-   *     console.log(objectProps.id);
+   *     console.log(objectProps.objId);
    * });
    */
   addIcon(type, options) {

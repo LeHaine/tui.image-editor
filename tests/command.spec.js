@@ -350,7 +350,7 @@ describe('commandFactory', () => {
           },
         })
         .then((textObject) => {
-          textObjectId = textObject.id;
+          textObjectId = textObject.objId;
           done();
         });
     });
@@ -421,7 +421,7 @@ describe('commandFactory', () => {
           strokeWidth: defaultStrokeWidth,
         })
         .then((shapeObject) => {
-          shapeObjectId = shapeObject.id;
+          shapeObjectId = shapeObject.objId;
           done();
         });
     });

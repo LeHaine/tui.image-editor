@@ -57,7 +57,7 @@ describe('Text', () => {
 
     it('Default option for autofocus should be true when adding text.', (done) => {
       text.add('default', {}).then((info) => {
-        const newText = graphics.getObject(info.id);
+        const newText = graphics.getObject(info.objId);
 
         expect(newText.selectionStart).toBe(0);
         expect(newText.selectionEnd).toBe(7);

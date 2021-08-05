@@ -13,7 +13,7 @@ const command = {
   execute(graphics, props) {
     if (this.isRedo) {
       props.forEach((prop) => {
-        graphics.setObjectProperties(prop.id, prop);
+        graphics.setObjectProperties(prop.objId, prop);
       });
     } else {
       this.undoData = getCachedUndoDataForDimension();
@@ -24,7 +24,7 @@ const command = {
 
   undo(graphics) {
     this.undoData.forEach((datum) => {
-      graphics.setObjectProperties(datum.id, datum);
+      graphics.setObjectProperties(datum.objId, datum);
     });
 
     return Promise.resolve();

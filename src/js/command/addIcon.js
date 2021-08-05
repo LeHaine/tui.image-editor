@@ -25,7 +25,7 @@ const command = {
     const iconComp = graphics.getComponent(ICON);
 
     return iconComp.add(type, options).then((objectProps) => {
-      this.undoData.object = graphics.getObject(objectProps.id);
+      this.undoData.object = graphics.getObject(objectProps.objId);
 
       return objectProps;
     });
