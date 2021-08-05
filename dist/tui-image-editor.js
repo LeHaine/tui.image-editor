@@ -3580,7 +3580,7 @@ var command = {
     var iconComp = graphics.getComponent(ICON);
 
     return iconComp.add(type, options).then(function (objectProps) {
-      _this.undoData.object = graphics.getObject(objectProps.id);
+      _this.undoData.object = graphics.getObject(objectProps.objId);
 
       return objectProps;
     });
@@ -3641,7 +3641,7 @@ var command = {
     var _this = this;
 
     return graphics.addImageObject(imgUrl).then(function (objectProps) {
-      _this.undoData.object = graphics.getObject(objectProps.id);
+      _this.undoData.object = graphics.getObject(objectProps.objId);
 
       return objectProps;
     });
@@ -3796,10 +3796,10 @@ var command = {
     var shapeComp = graphics.getComponent(SHAPE);
 
     return shapeComp.add(type, options).then(function (objectProps) {
-      var id = objectProps.id;
+      var objId = objectProps.objId;
 
 
-      _this.undoData.object = graphics.getObject(id);
+      _this.undoData.object = graphics.getObject(objId);
 
       return objectProps;
     });
@@ -3894,14 +3894,14 @@ var command = {
     }
 
     return textComp.add(text, options).then(function (objectProps) {
-      var id = objectProps.id;
+      var objId = objectProps.objId;
 
-      var textObject = graphics.getObject(id);
+      var textObject = graphics.getObject(objId);
 
       _this.undoData.object = textObject;
 
       (0, _selectionModifyHelper.setCachedUndoDataForDimension)((0, _selectionModifyHelper.makeSelectionUndoData)(textObject, function () {
-        return (0, _selectionModifyHelper.makeSelectionUndoDatum)(id, textObject, false);
+        return (0, _selectionModifyHelper.makeSelectionUndoDatum)(objId, textObject, false);
       }));
 
       return objectProps;
@@ -4169,7 +4169,7 @@ var command = {
   execute: function execute(graphics, props) {
     if (this.isRedo) {
       props.forEach(function (prop) {
-        graphics.setObjectProperties(prop.id, prop);
+        graphics.setObjectProperties(prop.objId, prop);
       });
     } else {
       this.undoData = (0, _selectionModifyHelper.getCachedUndoDataForDimension)();
@@ -4179,7 +4179,7 @@ var command = {
   },
   undo: function undo(graphics) {
     this.undoData.forEach(function (datum) {
-      graphics.setObjectProperties(datum.id, datum);
+      graphics.setObjectProperties(datum.objId, datum);
     });
 
     return _util.Promise.resolve();
@@ -4772,6 +4772,8 @@ var command = {
       objectItem.evented = true;
     });
 
+    this.undoData.objects = objects;
+
     return loader.load(json).then(function (objs) {
       objs.map(function (obj) {
         var selectionStyle = _consts.fObjectOptions.SELECTION_STYLE;
@@ -4784,9 +4786,20 @@ var command = {
           texComp.initialize(obj);
         }
 
+        graphics._addFabricObject(obj);
+
         return obj;
       });
+
+      return objs;
     });
+  },
+
+  /**
+   * @returns {Promise}
+   */
+  undo: function undo() {
+    return Promise.resolve();
   }
 };
 
@@ -14575,15 +14588,15 @@ function makeSelectionUndoData(obj, undoDatumMaker) {
 
 /**
  * Make undo datum
- * @param {number} id - object id
+ * @param {number} objId - object id
  * @param {fabric.Object} obj - selection object
  * @param {boolean} isSelection - whether or not object is selection
  * @returns {Object} undo datum
  * @private
  */
-function makeSelectionUndoDatum(id, obj, isSelection) {
+function makeSelectionUndoDatum(objId, obj, isSelection) {
   return isSelection ? {
-    id: id,
+    objId: objId,
     width: obj.width,
     height: obj.height,
     top: obj.top,
@@ -14591,7 +14604,7 @@ function makeSelectionUndoDatum(id, obj, isSelection) {
     angle: obj.angle,
     scaleX: obj.scaleX,
     scaleY: obj.scaleY
-  } : (0, _tuiCodeSnippet.extend)({ id: id }, obj);
+  } : (0, _tuiCodeSnippet.extend)({ objId: objId }, obj);
 }
 
 /***/ }),
@@ -16039,7 +16052,7 @@ var ImageEditor = function () {
        * imageEditor.on('objectActivated', function(props) {
        *     console.log(props);
        *     console.log(props.type);
-       *     console.log(props.id);
+       *     console.log(props.objId);
        * });
        */
       this.fire(_consts.eventNames.OBJECT_ACTIVATED, props);
@@ -16397,7 +16410,7 @@ var ImageEditor = function () {
      * @returns {Promise<ObjectProps, ErrorMsg>}
      * @example
      * imageEditor.addImageObject('path/fileName.jpg').then(objectProps => {
-     *     console.log(ojectProps.id);
+     *     console.log(ojectProps.objId);
      * });
      */
 
@@ -16760,7 +16773,7 @@ var ImageEditor = function () {
      *     ry: 100,
      *     isRegular: false
      * }).then(objectProps => {
-     *     console.log(objectProps.id);
+     *     console.log(objectProps.objId);
      * });
      * @example
      * imageEditor.addShape('rect', {
@@ -16774,7 +16787,7 @@ var ImageEditor = function () {
      *     ry: 100,
      *     isRegular: false
      * }).then(objectProps => {
-     *     console.log(objectProps.id);
+     *     console.log(objectProps.objId);
      * });
      */
 
@@ -16860,7 +16873,7 @@ var ImageEditor = function () {
      *         y: 10
      *     }
      * }).then(objectProps => {
-     *     console.log(objectProps.id);
+     *     console.log(objectProps.objId);
      * });
      */
 
@@ -17032,7 +17045,7 @@ var ImageEditor = function () {
   }, {
     key: '_onAddObject',
     value: function _onAddObject(objectProps) {
-      var obj = this._graphics.getObject(objectProps.id);
+      var obj = this._graphics.getObject(objectProps.objId);
       this._invoker.fire(_consts.eventNames.EXECUTE_COMMAND, (0, _util.getObjectType)(obj.type));
       this._pushAddObjectCommand(obj);
     }
@@ -17148,7 +17161,7 @@ var ImageEditor = function () {
      *     left: 100,
      *     top: 100
      * }).then(objectProps => {
-     *     console.log(objectProps.id);
+     *     console.log(objectProps.objId);
      * });
      */
 
