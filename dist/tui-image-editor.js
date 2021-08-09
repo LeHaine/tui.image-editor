@@ -8904,7 +8904,7 @@ var Text = function (_Component) {
         this.getCanvas().add(editingObj);
 
         var params = {
-          id: _tuiCodeSnippet2.default.stamp(editingObj),
+          objId: _tuiCodeSnippet2.default.stamp(editingObj),
           type: editingObj.type,
           text: textContent
         };
@@ -14180,7 +14180,7 @@ var Graphics = function () {
     value: function createObjectProperties(obj) {
       var predefinedKeys = ['left', 'top', 'width', 'height', 'fill', 'stroke', 'strokeWidth', 'opacity', 'angle'];
       var props = {
-        id: stamp(obj),
+        objId: stamp(obj),
         type: obj.type
       };
 
