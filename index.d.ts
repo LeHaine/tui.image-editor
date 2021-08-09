@@ -185,7 +185,7 @@ declare namespace tuiImageEditor {
     // icon, shape
     fill: string;
     height: number;
-    id: number;
+    objId: number;
     left: number;
     opacity: number;
     stroke: string | null;

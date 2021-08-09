@@ -428,7 +428,7 @@ class Text extends Component {
       this.getCanvas().add(editingObj);
 
       const params = {
-        id: snippet.stamp(editingObj),
+        objId: snippet.stamp(editingObj),
         type: editingObj.type,
         text: textContent,
       };

@@ -1364,7 +1364,7 @@ class Graphics {
       'angle',
     ];
     const props = {
-      id: stamp(obj),
+      objId: stamp(obj),
       type: obj.type,
     };
 

@@ -153,7 +153,7 @@ describe('commandFactory', () => {
 
       const props = [
         {
-          id: graphics.getObjectId(obj),
+          objId: graphics.getObjectId(obj),
           width: 30,
           height: 30,
           top: 30,

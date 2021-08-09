@@ -30,7 +30,7 @@ describe('selectionModifyHelper', () => {
   });
 
   it('should set/get cached undo data', () => {
-    const undoData = [{ id: 1 }];
+    const undoData = [{ objId: 1 }];
 
     setCachedUndoDataForDimension(undoData);
 
@@ -58,7 +58,7 @@ describe('selectionModifyHelper', () => {
       const result = makeSelectionUndoDatum(1, obj1, true);
 
       expect(result).toEqual({
-        id: 1,
+        objId: 1,
         width: obj1.width,
         height: obj1.height,
         top: obj1.top,
