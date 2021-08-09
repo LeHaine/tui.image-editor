@@ -14,14 +14,14 @@ const command = {
   /**
    * Change icon color
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} color - Color for icon
    * @returns {Promise}
    */
-  execute(graphics, id, color) {
+  execute(graphics, objId, color) {
     return new Promise((resolve, reject) => {
       const iconComp = graphics.getComponent(ICON);
-      const targetObj = graphics.getObject(id);
+      const targetObj = graphics.getObject(objId);
 
       if (!targetObj) {
         reject(rejectMessages.noObject);

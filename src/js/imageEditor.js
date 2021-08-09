@@ -75,7 +75,7 @@ const {
 
 /**
  * @typedef {object} ObjectProps - graphics object properties
- * @property {number} id - object id
+ * @property {number} objId -  object id
  * @property {string} type - object type
  * @property {string} text - text content
  * @property {(string | number)} left - Left
@@ -1082,7 +1082,7 @@ class ImageEditor {
 
   /**
    * Change shape
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} options - Shape options
    *      @param {(ShapeFillOption | string)} [options.fill] - {@link ShapeFillOption} or
    *        Shape foreground color (ex: '#fff', 'transparent')
@@ -1097,7 +1097,7 @@ class ImageEditor {
    * @returns {Promise}
    * @example
    * // call after selecting shape object on canvas
-   * imageEditor.changeShape(id, { // change rectagle or triangle
+   * imageEditor.changeShape(objId, { // change rectagle or triangle
    *     fill: 'red',
    *     stroke: 'blue',
    *     strokeWidth: 3,
@@ -1106,7 +1106,7 @@ class ImageEditor {
    * });
    * @example
    * // call after selecting shape object on canvas
-   * imageEditor.changeShape(id, { // change circle
+   * imageEditor.changeShape(objId, { // change circle
    *     fill: 'red',
    *     stroke: 'blue',
    *     strokeWidth: 3,
@@ -1114,10 +1114,10 @@ class ImageEditor {
    *     ry: 100
    * });
    */
-  changeShape(id, options, isSilent) {
+  changeShape(objId, options, isSilent) {
     const executeMethodName = isSilent ? 'executeSilent' : 'execute';
 
-    return this[executeMethodName](commands.CHANGE_SHAPE, id, options);
+    return this[executeMethodName](commands.CHANGE_SHAPE, objId, options);
   }
 
   /**
@@ -1161,21 +1161,21 @@ class ImageEditor {
 
   /**
    * Change contents of selected text object on image
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} text - Changing text
    * @returns {Promise<ObjectProps, ErrorMsg>}
    * @example
-   * imageEditor.changeText(id, 'change text');
+   * imageEditor.changeText(objId, 'change text');
    */
-  changeText(id, text) {
+  changeText(objId, text) {
     text = text || '';
 
-    return this.execute(commands.CHANGE_TEXT, id, text);
+    return this.execute(commands.CHANGE_TEXT, objId, text);
   }
 
   /**
    * Set style
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} styleObj - text styles
    *     @param {string} [styleObj.fill] Color
    *     @param {string} [styleObj.fontFamily] Font type for text
@@ -1187,14 +1187,14 @@ class ImageEditor {
    * @param {boolean} isSilent - is silent execution or not
    * @returns {Promise}
    * @example
-   * imageEditor.changeTextStyle(id, {
+   * imageEditor.changeTextStyle(objId, {
    *     fontStyle: 'italic'
    * });
    */
-  changeTextStyle(id, styleObj, isSilent) {
+  changeTextStyle(objId, styleObj, isSilent) {
     const executeMethodName = isSilent ? 'executeSilent' : 'execute';
 
-    return this[executeMethodName](commands.CHANGE_TEXT_STYLE, id, styleObj);
+    return this[executeMethodName](commands.CHANGE_TEXT_STYLE, objId, styleObj);
   }
 
   /**
@@ -1402,27 +1402,27 @@ class ImageEditor {
 
   /**
    * Change icon color
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} color - Color for icon
    * @returns {Promise}
    * @example
-   * imageEditor.changeIconColor(id, '#000000');
+   * imageEditor.changeIconColor(objId, '#000000');
    */
-  changeIconColor(id, color) {
-    return this.execute(commands.CHANGE_ICON_COLOR, id, color);
+  changeIconColor(objId, color) {
+    return this.execute(commands.CHANGE_ICON_COLOR, objId, color);
   }
 
   /**
    * Remove an object or group by id
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {Promise}
    * @example
-   * imageEditor.removeObject(id);
+   * imageEditor.removeObject(objId);
    */
-  removeObject(id) {
-    const { type } = this._graphics.getObject(id);
+  removeObject(objId) {
+    const { type } = this._graphics.getObject(objId);
 
-    return this.execute(commands.REMOVE_OBJECT, id, getObjectType(type));
+    return this.execute(commands.REMOVE_OBJECT, objId, getObjectType(type));
   }
 
   /**
@@ -1590,11 +1590,11 @@ class ImageEditor {
 
   /**
    * Set properties of active object
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} keyValue - key & value
    * @returns {Promise}
    * @example
-   * imageEditor.setObjectProperties(id, {
+   * imageEditor.setObjectProperties(objId, {
    *     left:100,
    *     top:100,
    *     width: 200,
@@ -1602,16 +1602,16 @@ class ImageEditor {
    *     opacity: 0.5
    * });
    */
-  setObjectProperties(id, keyValue) {
-    return this.execute(commands.SET_OBJECT_PROPERTIES, id, keyValue);
+  setObjectProperties(objId, keyValue) {
+    return this.execute(commands.SET_OBJECT_PROPERTIES, objId, keyValue);
   }
 
   /**
    * Set properties of active object, Do not leave an invoke history.
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} keyValue - key & value
    * @example
-   * imageEditor.setObjectPropertiesQuietly(id, {
+   * imageEditor.setObjectPropertiesQuietly(objId, {
    *     left:100,
    *     top:100,
    *     width: 200,
@@ -1619,23 +1619,23 @@ class ImageEditor {
    *     opacity: 0.5
    * });
    */
-  setObjectPropertiesQuietly(id, keyValue) {
-    this._graphics.setObjectProperties(id, keyValue);
+  setObjectPropertiesQuietly(objId, keyValue) {
+    this._graphics.setObjectProperties(objId, keyValue);
   }
 
   /**
    * Get properties of active object corresponding key
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Array<string>|ObjectProps|string} keys - property's key
    * @returns {ObjectProps} properties if id is valid or null
    * @example
-   * var props = imageEditor.getObjectProperties(id, 'left');
+   * var props = imageEditor.getObjectProperties(objId, 'left');
    * console.log(props);
    * @example
-   * var props = imageEditor.getObjectProperties(id, ['left', 'top', 'width', 'height']);
+   * var props = imageEditor.getObjectProperties(objId, ['left', 'top', 'width', 'height']);
    * console.log(props);
    * @example
-   * var props = imageEditor.getObjectProperties(id, {
+   * var props = imageEditor.getObjectProperties(objId, {
    *     left: null,
    *     top: null,
    *     width: null,
@@ -1644,13 +1644,13 @@ class ImageEditor {
    * });
    * console.log(props);
    */
-  getObjectProperties(id, keys) {
-    const object = this._graphics.getObject(id);
+  getObjectProperties(objId, keys) {
+    const object = this._graphics.getObject(objId);
     if (!object) {
       return null;
     }
 
-    return this._graphics.getObjectProperties(id, keys);
+    return this._graphics.getObjectProperties(objId, keys);
   }
 
   /**
@@ -1667,21 +1667,21 @@ class ImageEditor {
 
   /**
    * Get object position by originX, originY
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} originX - can be 'left', 'center', 'right'
    * @param {string} originY - can be 'top', 'center', 'bottom'
    * @returns {Object} {{x:number, y: number}} position by origin if id is valid, or null
    * @example
-   * var position = imageEditor.getObjectPosition(id, 'left', 'top');
+   * var position = imageEditor.getObjectPosition(objId, 'left', 'top');
    * console.log(position);
    */
-  getObjectPosition(id, originX, originY) {
-    return this._graphics.getObjectPosition(id, originX, originY);
+  getObjectPosition(objId, originX, originY) {
+    return this._graphics.getObjectPosition(objId, originX, originY);
   }
 
   /**
    * Set object position  by originX, originY
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} posInfo - position object
    *  @param {number} posInfo.x - x position
    *  @param {number} posInfo.y - y position
@@ -1690,7 +1690,7 @@ class ImageEditor {
    * @returns {Promise}
    * @example
    * // align the object to 'left', 'top'
-   * imageEditor.setObjectPosition(id, {
+   * imageEditor.setObjectPosition(objId, {
    *     x: 0,
    *     y: 0,
    *     originX: 'left',
@@ -1699,7 +1699,7 @@ class ImageEditor {
    * @example
    * // align the object to 'right', 'top'
    * var canvasSize = imageEditor.getCanvasSize();
-   * imageEditor.setObjectPosition(id, {
+   * imageEditor.setObjectPosition(objId, {
    *     x: canvasSize.width,
    *     y: 0,
    *     originX: 'right',
@@ -1708,7 +1708,7 @@ class ImageEditor {
    * @example
    * // align the object to 'left', 'bottom'
    * var canvasSize = imageEditor.getCanvasSize();
-   * imageEditor.setObjectPosition(id, {
+   * imageEditor.setObjectPosition(objId, {
    *     x: 0,
    *     y: canvasSize.height,
    *     originX: 'left',
@@ -1717,15 +1717,15 @@ class ImageEditor {
    * @example
    * // align the object to 'right', 'bottom'
    * var canvasSize = imageEditor.getCanvasSize();
-   * imageEditor.setObjectPosition(id, {
+   * imageEditor.setObjectPosition(objId, {
    *     x: canvasSize.width,
    *     y: canvasSize.height,
    *     originX: 'right',
    *     originY: 'bottom'
    * });
    */
-  setObjectPosition(id, posInfo) {
-    return this.execute(commands.SET_OBJECT_POSITION, id, posInfo);
+  setObjectPosition(objId, posInfo) {
+    return this.execute(commands.SET_OBJECT_POSITION, objId, posInfo);
   }
 
   /**

@@ -253,11 +253,11 @@ class Graphics {
 
   /**
    * Get an object by id
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {fabric.Object} object corresponding id
    */
-  getObject(id) {
-    return this._objects[id];
+  getObject(objId) {
+    return this._objects[objId];
   }
 
   /**
@@ -287,13 +287,13 @@ class Graphics {
 
   /**
    * Removes an object or group by id
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {Array} removed objects
    */
-  removeObjectById(id) {
+  removeObjectById(objId) {
     const objects = [];
     const canvas = this._canvas;
-    const target = this.getObject(id);
+    const target = this.getObject(objId);
     const isValidGroup = target && target.isType('group') && !target.isEmpty();
 
     if (isValidGroup) {
@@ -830,7 +830,7 @@ class Graphics {
 
   /**
    * Set object properties
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} props - props
    *     @param {string} [props.fill] Color
    *     @param {string} [props.fontFamily] Font type for text
@@ -841,8 +841,8 @@ class Graphics {
    *     @param {string} [props.textDecoration] Type of line (underline / line-through / overline)
    * @returns {Object} applied properties
    */
-  setObjectProperties(id, props) {
-    const object = this.getObject(id);
+  setObjectProperties(objId, props) {
+    const object = this.getObject(objId);
     const clone = extend({}, props);
 
     object.set(clone);
@@ -856,12 +856,12 @@ class Graphics {
 
   /**
    * Get object properties corresponding key
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Array<string>|ObjectProps|string} keys - property's key
    * @returns {Object} properties
    */
-  getObjectProperties(id, keys) {
-    const object = this.getObject(id);
+  getObjectProperties(objId, keys) {
+    const object = this.getObject(objId);
     const props = {};
 
     if (isString(keys)) {
@@ -881,13 +881,13 @@ class Graphics {
 
   /**
    * Get object position by originX, originY
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} originX - can be 'left', 'center', 'right'
    * @param {string} originY - can be 'top', 'center', 'bottom'
-   * @returns {Object} {{x:number, y: number}} position by origin if id is valid, or null
+   * @returns {Object} {{x:number, y: number}} position by origin if id is valobjId, or null
    */
-  getObjectPosition(id, originX, originY) {
-    const targetObj = this.getObject(id);
+  getObjectPosition(objId, originX, originY) {
+    const targetObj = this.getObject(objId);
     if (!targetObj) {
       return null;
     }
@@ -897,7 +897,7 @@ class Graphics {
 
   /**
    * Set object position  by originX, originY
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} posInfo - position object
    *  @param {number} posInfo.x - x position
    *  @param {number} posInfo.y - y position
@@ -905,8 +905,8 @@ class Graphics {
    *  @param {string} posInfo.originY - can be 'top', 'center', 'bottom'
    * @returns {boolean} true if target id is valid or false
    */
-  setObjectPosition(id, posInfo) {
-    const targetObj = this.getObject(id);
+  setObjectPosition(objId, posInfo) {
+    const targetObj = this.getObject(objId);
     const { x, y, originX, originY } = posInfo;
     if (!targetObj) {
       return false;
@@ -1410,18 +1410,18 @@ class Graphics {
    * @returns {number} object id
    */
   _addFabricObject(obj) {
-    const id = stamp(obj);
-    this._objects[id] = obj;
+    const objId = stamp(obj);
+    this._objects[objId] = obj;
 
-    return id;
+    return objId;
   }
 
   /**
    * Remove an object in array yb id
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    */
-  _removeFabricObject(id) {
-    delete this._objects[id];
+  _removeFabricObject(objId) {
+    delete this._objects[objId];
   }
 
   /**

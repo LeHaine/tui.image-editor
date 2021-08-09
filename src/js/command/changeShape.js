@@ -40,7 +40,7 @@ const command = {
   /**
    * Change a shape
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} options - Shape options
    *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
    *      @param {string} [options.stroke] - Shape outline color
@@ -55,9 +55,9 @@ const command = {
    * @param {boolean} isSilent - is silent execution or not
    * @returns {Promise}
    */
-  execute(graphics, id, options, isSilent) {
+  execute(graphics, objId, options, isSilent) {
     const shapeComp = graphics.getComponent(SHAPE);
-    const targetObj = graphics.getObject(id);
+    const targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return Promise.reject(rejectMessages.noObject);

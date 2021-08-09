@@ -12,7 +12,7 @@ const command = {
   /**
    * Set object properties
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} posInfo - position object
    *  @param {number} posInfo.x - x position
    *  @param {number} posInfo.y - y position
@@ -20,17 +20,17 @@ const command = {
    *  @param {string} posInfo.originY - can be 'top', 'center', 'bottom'
    * @returns {Promise}
    */
-  execute(graphics, id, posInfo) {
-    const targetObj = graphics.getObject(id);
+  execute(graphics, objId, posInfo) {
+    const targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return Promise.reject(rejectMessages.noObject);
     }
 
-    this.undoData.objectId = id;
-    this.undoData.props = graphics.getObjectProperties(id, ['left', 'top']);
+    this.undoData.objectId = objId;
+    this.undoData.props = graphics.getObjectProperties(objId, ['left', 'top']);
 
-    graphics.setObjectPosition(id, posInfo);
+    graphics.setObjectPosition(objId, posInfo);
     graphics.renderAll();
 
     return Promise.resolve();

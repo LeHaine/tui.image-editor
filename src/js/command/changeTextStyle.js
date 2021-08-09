@@ -40,7 +40,7 @@ const command = {
   /**
    * Change text styles
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} styles - text styles
    *     @param {string} [styles.fill] Color
    *     @param {string} [styles.fontFamily] Font type for text
@@ -52,9 +52,9 @@ const command = {
    * @param {boolean} isSilent - is silent execution or not
    * @returns {Promise}
    */
-  execute(graphics, id, styles, isSilent) {
+  execute(graphics, objId, styles, isSilent) {
     const textComp = graphics.getComponent(TEXT);
-    const targetObj = graphics.getObject(id);
+    const targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return Promise.reject(rejectMessages.noObject);

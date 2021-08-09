@@ -14,13 +14,13 @@ const command = {
   /**
    * Change a text
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} text - Changing text
    * @returns {Promise}
    */
-  execute(graphics, id, text) {
+  execute(graphics, objId, text) {
     const textComp = graphics.getComponent(TEXT);
-    const targetObj = graphics.getObject(id);
+    const targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return Promise.reject(rejectMessages.noObject);

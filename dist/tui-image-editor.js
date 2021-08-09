@@ -4087,16 +4087,16 @@ var command = {
   /**
    * Change icon color
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} color - Color for icon
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, color) {
+  execute: function execute(graphics, objId, color) {
     var _this = this;
 
     return new _util.Promise(function (resolve, reject) {
       var iconComp = graphics.getComponent(ICON);
-      var targetObj = graphics.getObject(id);
+      var targetObj = graphics.getObject(objId);
 
       if (!targetObj) {
         reject(_consts.rejectMessages.noObject);
@@ -4258,7 +4258,7 @@ var command = {
   /**
    * Change a shape
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} options - Shape options
    *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
    *      @param {string} [options.stroke] - Shape outline color
@@ -4273,9 +4273,9 @@ var command = {
    * @param {boolean} isSilent - is silent execution or not
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, options, isSilent) {
+  execute: function execute(graphics, objId, options, isSilent) {
     var shapeComp = graphics.getComponent(SHAPE);
-    var targetObj = graphics.getObject(id);
+    var targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return _util.Promise.reject(_consts.rejectMessages.noObject);
@@ -4347,13 +4347,13 @@ var command = {
   /**
    * Change a text
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {string} text - Changing text
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, text) {
+  execute: function execute(graphics, objId, text) {
     var textComp = graphics.getComponent(TEXT);
-    var targetObj = graphics.getObject(id);
+    var targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return _util.Promise.reject(_consts.rejectMessages.noObject);
@@ -4453,7 +4453,7 @@ var command = {
   /**
    * Change text styles
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} styles - text styles
    *     @param {string} [styles.fill] Color
    *     @param {string} [styles.fontFamily] Font type for text
@@ -4465,9 +4465,9 @@ var command = {
    * @param {boolean} isSilent - is silent execution or not
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, styles, isSilent) {
+  execute: function execute(graphics, objId, styles, isSilent) {
     var textComp = graphics.getComponent(TEXT);
-    var targetObj = graphics.getObject(id);
+    var targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return _util.Promise.reject(_consts.rejectMessages.noObject);
@@ -4906,14 +4906,14 @@ var command = {
   /**
    * Remove an object
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {Promise}
    */
-  execute: function execute(graphics, id) {
+  execute: function execute(graphics, objId) {
     var _this = this;
 
     return new _util.Promise(function (resolve, reject) {
-      _this.undoData.objects = graphics.removeObjectById(id);
+      _this.undoData.objects = graphics.removeObjectById(objId);
       if (_this.undoData.objects.length) {
         resolve();
       } else {
@@ -5209,7 +5209,7 @@ var command = {
   /**
    * Set object properties
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} posInfo - position object
    *  @param {number} posInfo.x - x position
    *  @param {number} posInfo.y - y position
@@ -5217,17 +5217,17 @@ var command = {
    *  @param {string} posInfo.originY - can be 'top', 'center', 'bottom'
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, posInfo) {
-    var targetObj = graphics.getObject(id);
+  execute: function execute(graphics, objId, posInfo) {
+    var targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return _util.Promise.reject(_consts.rejectMessages.noObject);
     }
 
-    this.undoData.objectId = id;
-    this.undoData.props = graphics.getObjectProperties(id, ['left', 'top']);
+    this.undoData.objectId = objId;
+    this.undoData.props = graphics.getObjectProperties(objId, ['left', 'top']);
 
-    graphics.setObjectPosition(id, posInfo);
+    graphics.setObjectPosition(objId, posInfo);
     graphics.renderAll();
 
     return _util.Promise.resolve();
@@ -5299,7 +5299,7 @@ var command = {
   /**
    * Set object properties
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} props - properties
    *     @param {string} [props.fill] Color
    *     @param {string} [props.fontFamily] Font type for text
@@ -5310,10 +5310,10 @@ var command = {
    *     @param {string} [props.textDecoration] Type of line (underline / line-through / overline)
    * @returns {Promise}
    */
-  execute: function execute(graphics, id, props) {
+  execute: function execute(graphics, objId, props) {
     var _this = this;
 
-    var targetObj = graphics.getObject(id);
+    var targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return _util.Promise.reject(_consts.rejectMessages.noObject);
@@ -5324,7 +5324,7 @@ var command = {
       _this.undoData.props[key] = targetObj[key];
     });
 
-    graphics.setObjectProperties(id, props);
+    graphics.setObjectProperties(objId, props);
 
     return _util.Promise.resolve();
   },
@@ -5332,14 +5332,14 @@ var command = {
 
   /**
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {Promise}
    */
-  undo: function undo(graphics, id) {
+  undo: function undo(graphics, objId) {
     var props = this.undoData.props;
 
 
-    graphics.setObjectProperties(id, props);
+    graphics.setObjectProperties(objId, props);
 
     return _util.Promise.resolve();
   }
@@ -12809,14 +12809,14 @@ var Graphics = function () {
 
     /**
      * Get an object by id
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @returns {fabric.Object} object corresponding id
      */
 
   }, {
     key: 'getObject',
-    value: function getObject(id) {
-      return this._objects[id];
+    value: function getObject(objId) {
+      return this._objects[objId];
     }
 
     /**
@@ -12852,16 +12852,16 @@ var Graphics = function () {
 
     /**
      * Removes an object or group by id
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @returns {Array} removed objects
      */
 
   }, {
     key: 'removeObjectById',
-    value: function removeObjectById(id) {
+    value: function removeObjectById(objId) {
       var objects = [];
       var canvas = this._canvas;
-      var target = this.getObject(id);
+      var target = this.getObject(objId);
       var isValidGroup = target && target.isType('group') && !target.isEmpty();
 
       if (isValidGroup) {
@@ -13543,7 +13543,7 @@ var Graphics = function () {
 
     /**
      * Set object properties
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} props - props
      *     @param {string} [props.fill] Color
      *     @param {string} [props.fontFamily] Font type for text
@@ -13557,8 +13557,8 @@ var Graphics = function () {
 
   }, {
     key: 'setObjectProperties',
-    value: function setObjectProperties(id, props) {
-      var object = this.getObject(id);
+    value: function setObjectProperties(objId, props) {
+      var object = this.getObject(objId);
       var clone = extend({}, props);
 
       object.set(clone);
@@ -13572,15 +13572,15 @@ var Graphics = function () {
 
     /**
      * Get object properties corresponding key
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Array<string>|ObjectProps|string} keys - property's key
      * @returns {Object} properties
      */
 
   }, {
     key: 'getObjectProperties',
-    value: function getObjectProperties(id, keys) {
-      var object = this.getObject(id);
+    value: function getObjectProperties(objId, keys) {
+      var object = this.getObject(objId);
       var props = {};
 
       if (isString(keys)) {
@@ -13600,16 +13600,16 @@ var Graphics = function () {
 
     /**
      * Get object position by originX, originY
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {string} originX - can be 'left', 'center', 'right'
      * @param {string} originY - can be 'top', 'center', 'bottom'
-     * @returns {Object} {{x:number, y: number}} position by origin if id is valid, or null
+     * @returns {Object} {{x:number, y: number}} position by origin if id is valobjId, or null
      */
 
   }, {
     key: 'getObjectPosition',
-    value: function getObjectPosition(id, originX, originY) {
-      var targetObj = this.getObject(id);
+    value: function getObjectPosition(objId, originX, originY) {
+      var targetObj = this.getObject(objId);
       if (!targetObj) {
         return null;
       }
@@ -13619,7 +13619,7 @@ var Graphics = function () {
 
     /**
      * Set object position  by originX, originY
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} posInfo - position object
      *  @param {number} posInfo.x - x position
      *  @param {number} posInfo.y - y position
@@ -13630,8 +13630,8 @@ var Graphics = function () {
 
   }, {
     key: 'setObjectPosition',
-    value: function setObjectPosition(id, posInfo) {
-      var targetObj = this.getObject(id);
+    value: function setObjectPosition(objId, posInfo) {
+      var targetObj = this.getObject(objId);
       var x = posInfo.x,
           y = posInfo.y,
           originX = posInfo.originX,
@@ -14224,21 +14224,21 @@ var Graphics = function () {
   }, {
     key: '_addFabricObject',
     value: function _addFabricObject(obj) {
-      var id = stamp(obj);
-      this._objects[id] = obj;
+      var objId = stamp(obj);
+      this._objects[objId] = obj;
 
-      return id;
+      return objId;
     }
 
     /**
      * Remove an object in array yb id
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      */
 
   }, {
     key: '_removeFabricObject',
-    value: function _removeFabricObject(id) {
-      delete this._objects[id];
+    value: function _removeFabricObject(objId) {
+      delete this._objects[objId];
     }
 
     /**
@@ -15632,7 +15632,7 @@ var MOUSE_DOWN = _consts.eventNames.MOUSE_DOWN,
 
 /**
  * @typedef {object} ObjectProps - graphics object properties
- * @property {number} id - object id
+ * @property {number} objId -  object id
  * @property {string} type - object type
  * @property {string} text - text content
  * @property {(string | number)} left - Left
@@ -16803,7 +16803,7 @@ var ImageEditor = function () {
 
     /**
      * Change shape
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} options - Shape options
      *      @param {(ShapeFillOption | string)} [options.fill] - {@link ShapeFillOption} or
      *        Shape foreground color (ex: '#fff', 'transparent')
@@ -16818,7 +16818,7 @@ var ImageEditor = function () {
      * @returns {Promise}
      * @example
      * // call after selecting shape object on canvas
-     * imageEditor.changeShape(id, { // change rectagle or triangle
+     * imageEditor.changeShape(objId, { // change rectagle or triangle
      *     fill: 'red',
      *     stroke: 'blue',
      *     strokeWidth: 3,
@@ -16827,7 +16827,7 @@ var ImageEditor = function () {
      * });
      * @example
      * // call after selecting shape object on canvas
-     * imageEditor.changeShape(id, { // change circle
+     * imageEditor.changeShape(objId, { // change circle
      *     fill: 'red',
      *     stroke: 'blue',
      *     strokeWidth: 3,
@@ -16838,10 +16838,10 @@ var ImageEditor = function () {
 
   }, {
     key: 'changeShape',
-    value: function changeShape(id, options, isSilent) {
+    value: function changeShape(objId, options, isSilent) {
       var executeMethodName = isSilent ? 'executeSilent' : 'execute';
 
-      return this[executeMethodName](_consts.commandNames.CHANGE_SHAPE, id, options);
+      return this[executeMethodName](_consts.commandNames.CHANGE_SHAPE, objId, options);
     }
 
     /**
@@ -16888,24 +16888,24 @@ var ImageEditor = function () {
 
     /**
      * Change contents of selected text object on image
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {string} text - Changing text
      * @returns {Promise<ObjectProps, ErrorMsg>}
      * @example
-     * imageEditor.changeText(id, 'change text');
+     * imageEditor.changeText(objId, 'change text');
      */
 
   }, {
     key: 'changeText',
-    value: function changeText(id, text) {
+    value: function changeText(objId, text) {
       text = text || '';
 
-      return this.execute(_consts.commandNames.CHANGE_TEXT, id, text);
+      return this.execute(_consts.commandNames.CHANGE_TEXT, objId, text);
     }
 
     /**
      * Set style
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} styleObj - text styles
      *     @param {string} [styleObj.fill] Color
      *     @param {string} [styleObj.fontFamily] Font type for text
@@ -16917,17 +16917,17 @@ var ImageEditor = function () {
      * @param {boolean} isSilent - is silent execution or not
      * @returns {Promise}
      * @example
-     * imageEditor.changeTextStyle(id, {
+     * imageEditor.changeTextStyle(objId, {
      *     fontStyle: 'italic'
      * });
      */
 
   }, {
     key: 'changeTextStyle',
-    value: function changeTextStyle(id, styleObj, isSilent) {
+    value: function changeTextStyle(objId, styleObj, isSilent) {
       var executeMethodName = isSilent ? 'executeSilent' : 'execute';
 
-      return this[executeMethodName](_consts.commandNames.CHANGE_TEXT_STYLE, id, styleObj);
+      return this[executeMethodName](_consts.commandNames.CHANGE_TEXT_STYLE, objId, styleObj);
     }
 
     /**
@@ -17177,34 +17177,34 @@ var ImageEditor = function () {
 
     /**
      * Change icon color
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {string} color - Color for icon
      * @returns {Promise}
      * @example
-     * imageEditor.changeIconColor(id, '#000000');
+     * imageEditor.changeIconColor(objId, '#000000');
      */
 
   }, {
     key: 'changeIconColor',
-    value: function changeIconColor(id, color) {
-      return this.execute(_consts.commandNames.CHANGE_ICON_COLOR, id, color);
+    value: function changeIconColor(objId, color) {
+      return this.execute(_consts.commandNames.CHANGE_ICON_COLOR, objId, color);
     }
 
     /**
      * Remove an object or group by id
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @returns {Promise}
      * @example
-     * imageEditor.removeObject(id);
+     * imageEditor.removeObject(objId);
      */
 
   }, {
     key: 'removeObject',
-    value: function removeObject(id) {
-      var _graphics$getObject = this._graphics.getObject(id),
+    value: function removeObject(objId) {
+      var _graphics$getObject = this._graphics.getObject(objId),
           type = _graphics$getObject.type;
 
-      return this.execute(_consts.commandNames.REMOVE_OBJECT, id, (0, _util.getObjectType)(type));
+      return this.execute(_consts.commandNames.REMOVE_OBJECT, objId, (0, _util.getObjectType)(type));
     }
 
     /**
@@ -17406,11 +17406,11 @@ var ImageEditor = function () {
 
     /**
      * Set properties of active object
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} keyValue - key & value
      * @returns {Promise}
      * @example
-     * imageEditor.setObjectProperties(id, {
+     * imageEditor.setObjectProperties(objId, {
      *     left:100,
      *     top:100,
      *     width: 200,
@@ -17421,16 +17421,16 @@ var ImageEditor = function () {
 
   }, {
     key: 'setObjectProperties',
-    value: function setObjectProperties(id, keyValue) {
-      return this.execute(_consts.commandNames.SET_OBJECT_PROPERTIES, id, keyValue);
+    value: function setObjectProperties(objId, keyValue) {
+      return this.execute(_consts.commandNames.SET_OBJECT_PROPERTIES, objId, keyValue);
     }
 
     /**
      * Set properties of active object, Do not leave an invoke history.
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} keyValue - key & value
      * @example
-     * imageEditor.setObjectPropertiesQuietly(id, {
+     * imageEditor.setObjectPropertiesQuietly(objId, {
      *     left:100,
      *     top:100,
      *     width: 200,
@@ -17441,23 +17441,23 @@ var ImageEditor = function () {
 
   }, {
     key: 'setObjectPropertiesQuietly',
-    value: function setObjectPropertiesQuietly(id, keyValue) {
-      this._graphics.setObjectProperties(id, keyValue);
+    value: function setObjectPropertiesQuietly(objId, keyValue) {
+      this._graphics.setObjectProperties(objId, keyValue);
     }
 
     /**
      * Get properties of active object corresponding key
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Array<string>|ObjectProps|string} keys - property's key
      * @returns {ObjectProps} properties if id is valid or null
      * @example
-     * var props = imageEditor.getObjectProperties(id, 'left');
+     * var props = imageEditor.getObjectProperties(objId, 'left');
      * console.log(props);
      * @example
-     * var props = imageEditor.getObjectProperties(id, ['left', 'top', 'width', 'height']);
+     * var props = imageEditor.getObjectProperties(objId, ['left', 'top', 'width', 'height']);
      * console.log(props);
      * @example
-     * var props = imageEditor.getObjectProperties(id, {
+     * var props = imageEditor.getObjectProperties(objId, {
      *     left: null,
      *     top: null,
      *     width: null,
@@ -17469,13 +17469,13 @@ var ImageEditor = function () {
 
   }, {
     key: 'getObjectProperties',
-    value: function getObjectProperties(id, keys) {
-      var object = this._graphics.getObject(id);
+    value: function getObjectProperties(objId, keys) {
+      var object = this._graphics.getObject(objId);
       if (!object) {
         return null;
       }
 
-      return this._graphics.getObjectProperties(id, keys);
+      return this._graphics.getObjectProperties(objId, keys);
     }
 
     /**
@@ -17495,24 +17495,24 @@ var ImageEditor = function () {
 
     /**
      * Get object position by originX, originY
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {string} originX - can be 'left', 'center', 'right'
      * @param {string} originY - can be 'top', 'center', 'bottom'
      * @returns {Object} {{x:number, y: number}} position by origin if id is valid, or null
      * @example
-     * var position = imageEditor.getObjectPosition(id, 'left', 'top');
+     * var position = imageEditor.getObjectPosition(objId, 'left', 'top');
      * console.log(position);
      */
 
   }, {
     key: 'getObjectPosition',
-    value: function getObjectPosition(id, originX, originY) {
-      return this._graphics.getObjectPosition(id, originX, originY);
+    value: function getObjectPosition(objId, originX, originY) {
+      return this._graphics.getObjectPosition(objId, originX, originY);
     }
 
     /**
      * Set object position  by originX, originY
-     * @param {number} id - object id
+     * @param {number} objId -  object id
      * @param {Object} posInfo - position object
      *  @param {number} posInfo.x - x position
      *  @param {number} posInfo.y - y position
@@ -17521,7 +17521,7 @@ var ImageEditor = function () {
      * @returns {Promise}
      * @example
      * // align the object to 'left', 'top'
-     * imageEditor.setObjectPosition(id, {
+     * imageEditor.setObjectPosition(objId, {
      *     x: 0,
      *     y: 0,
      *     originX: 'left',
@@ -17530,7 +17530,7 @@ var ImageEditor = function () {
      * @example
      * // align the object to 'right', 'top'
      * var canvasSize = imageEditor.getCanvasSize();
-     * imageEditor.setObjectPosition(id, {
+     * imageEditor.setObjectPosition(objId, {
      *     x: canvasSize.width,
      *     y: 0,
      *     originX: 'right',
@@ -17539,7 +17539,7 @@ var ImageEditor = function () {
      * @example
      * // align the object to 'left', 'bottom'
      * var canvasSize = imageEditor.getCanvasSize();
-     * imageEditor.setObjectPosition(id, {
+     * imageEditor.setObjectPosition(objId, {
      *     x: 0,
      *     y: canvasSize.height,
      *     originX: 'left',
@@ -17548,7 +17548,7 @@ var ImageEditor = function () {
      * @example
      * // align the object to 'right', 'bottom'
      * var canvasSize = imageEditor.getCanvasSize();
-     * imageEditor.setObjectPosition(id, {
+     * imageEditor.setObjectPosition(objId, {
      *     x: canvasSize.width,
      *     y: canvasSize.height,
      *     originX: 'right',
@@ -17558,8 +17558,8 @@ var ImageEditor = function () {
 
   }, {
     key: 'setObjectPosition',
-    value: function setObjectPosition(id, posInfo) {
-      return this.execute(_consts.commandNames.SET_OBJECT_POSITION, id, posInfo);
+    value: function setObjectPosition(objId, posInfo) {
+      return this.execute(_consts.commandNames.SET_OBJECT_POSITION, objId, posInfo);
     }
 
     /**

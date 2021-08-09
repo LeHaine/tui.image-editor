@@ -13,7 +13,7 @@ const command = {
   /**
    * Set object properties
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @param {Object} props - properties
    *     @param {string} [props.fill] Color
    *     @param {string} [props.fontFamily] Font type for text
@@ -24,8 +24,8 @@ const command = {
    *     @param {string} [props.textDecoration] Type of line (underline / line-through / overline)
    * @returns {Promise}
    */
-  execute(graphics, id, props) {
-    const targetObj = graphics.getObject(id);
+  execute(graphics, objId, props) {
+    const targetObj = graphics.getObject(objId);
 
     if (!targetObj) {
       return Promise.reject(rejectMessages.noObject);
@@ -36,20 +36,20 @@ const command = {
       this.undoData.props[key] = targetObj[key];
     });
 
-    graphics.setObjectProperties(id, props);
+    graphics.setObjectProperties(objId, props);
 
     return Promise.resolve();
   },
 
   /**
    * @param {Graphics} graphics - Graphics instance
-   * @param {number} id - object id
+   * @param {number} objId -  object id
    * @returns {Promise}
    */
-  undo(graphics, id) {
+  undo(graphics, objId) {
     const { props } = this.undoData;
 
-    graphics.setObjectProperties(id, props);
+    graphics.setObjectProperties(objId, props);
 
     return Promise.resolve();
   },
