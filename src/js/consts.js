@@ -264,6 +264,7 @@ export const keyCodes = {
   ARROW_DOWN: 40,
   ARROW_UP: 38,
   SPACE: 32,
+  ESCAPE: 27,
 };
 
 /**

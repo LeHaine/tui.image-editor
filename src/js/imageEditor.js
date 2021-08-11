@@ -371,6 +371,8 @@ class ImageEditor {
       e.preventDefault();
       this.removeActiveObject();
     }
+
+    this.fire(events.KEY_DOWN, e);
   }
 
   /**
