@@ -16210,6 +16210,7 @@ var ImageEditor = function () {
     value: function clearHistory() {
       this._invoker.clearUndoStack();
       this._invoker.clearRedoStack();
+      this._invoker.unlock();
     }
 
     /**
