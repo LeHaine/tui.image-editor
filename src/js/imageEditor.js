@@ -596,6 +596,7 @@ class ImageEditor {
   clearHistory() {
     this._invoker.clearUndoStack();
     this._invoker.clearRedoStack();
+    this._invoker.unlock();
   }
 
   /**
