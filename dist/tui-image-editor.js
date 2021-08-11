@@ -10250,7 +10250,8 @@ var keyCodes = exports.keyCodes = {
   DEL: 46,
   ARROW_DOWN: 40,
   ARROW_UP: 38,
-  SPACE: 32
+  SPACE: 32,
+  ESCAPE: 27
 };
 
 /**
@@ -15936,6 +15937,8 @@ var ImageEditor = function () {
         e.preventDefault();
         this.removeActiveObject();
       }
+
+      this.fire(_consts.eventNames.KEY_DOWN, e);
     }
 
     /**
