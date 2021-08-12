@@ -12,9 +12,17 @@ const command = {
 
   execute(graphics, props) {
     if (this.isRedo) {
+      graphics.discardSelection();
+      const objs = [];
       props.forEach((prop) => {
         graphics.setObjectProperties(prop.objId, prop);
+        objs.push(graphics.getObject(prop.objId));
       });
+      const activeSelection = new fabric.ActiveSelection(objs, {
+        canvas: graphics._canvas,
+      });
+      graphics.setActiveObject(activeSelection);
+      graphics._canvas.renderAll();
     } else {
       this.undoData = getCachedUndoDataForDimension();
     }
