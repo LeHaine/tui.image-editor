@@ -23,9 +23,24 @@ const command = {
   },
 
   undo(graphics) {
+    if (this.undoData.length > 1) {
+      graphics.discardSelection();
+    }
+
+    const objs = [];
+
     this.undoData.forEach((datum) => {
       graphics.setObjectProperties(datum.objId, datum);
+      objs.push(graphics.getObject(datum.objId));
     });
+
+    if (this.undoData.length > 1) {
+      const activeSelection = new fabric.ActiveSelection(objs, {
+        canvas: graphics._canvas,
+      });
+      graphics.setActiveObject(activeSelection);
+      graphics._canvas.renderAll();
+    }
 
     return Promise.resolve();
   },
