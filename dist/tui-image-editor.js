@@ -4168,9 +4168,17 @@ var command = {
 
   execute: function execute(graphics, props) {
     if (this.isRedo) {
+      graphics.discardSelection();
+      var objs = [];
       props.forEach(function (prop) {
         graphics.setObjectProperties(prop.objId, prop);
+        objs.push(graphics.getObject(prop.objId));
       });
+      var activeSelection = new fabric.ActiveSelection(objs, {
+        canvas: graphics._canvas
+      });
+      graphics.setActiveObject(activeSelection);
+      graphics._canvas.renderAll();
     } else {
       this.undoData = (0, _selectionModifyHelper.getCachedUndoDataForDimension)();
     }
