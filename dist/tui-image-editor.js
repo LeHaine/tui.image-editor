@@ -4178,10 +4178,7 @@ var command = {
     return _util.Promise.resolve();
   },
   undo: function undo(graphics) {
-    if (this.undoData.length > 1) {
-      graphics.discardSelection();
-    }
-
+    graphics.discardSelection();
     var objs = [];
 
     this.undoData.forEach(function (datum) {
@@ -4189,13 +4186,11 @@ var command = {
       objs.push(graphics.getObject(datum.objId));
     });
 
-    if (this.undoData.length > 1) {
-      var activeSelection = new fabric.ActiveSelection(objs, {
-        canvas: graphics._canvas
-      });
-      graphics.setActiveObject(activeSelection);
-      graphics._canvas.renderAll();
-    }
+    var activeSelection = new fabric.ActiveSelection(objs, {
+      canvas: graphics._canvas
+    });
+    graphics.setActiveObject(activeSelection);
+    graphics._canvas.renderAll();
 
     return _util.Promise.resolve();
   }
